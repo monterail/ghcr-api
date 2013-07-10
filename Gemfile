@@ -10,6 +10,9 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'rack-oauth2'
 
+gem 'hipchat-api'
+
+
 # Debugging
 gem 'pry'
 gem 'pry-stack_explorer'

@@ -48,6 +48,11 @@ GEM
       rails (>= 3, < 5)
     hashie (2.0.5)
     hike (1.2.3)
+    hipchat-api (1.0.5)
+      httparty
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     httpauth (0.2.0)
     httpclient (2.3.3)
     i18n (0.6.4)
@@ -60,6 +65,7 @@ GEM
     mime-types (1.23)
     minitest (4.7.5)
     multi_json (1.7.7)
+    multi_xml (0.5.4)
     multipart-post (1.2.0)
     oauth2 (0.8.1)
       faraday (~> 0.8)
@@ -145,6 +151,7 @@ PLATFORMS
 
 DEPENDENCIES
   figaro
+  hipchat-api
   omniauth
   omniauth-github
   pg
