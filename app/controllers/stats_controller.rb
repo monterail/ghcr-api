@@ -1,5 +1,5 @@
 class StatsController < ApplicationController
-  def index
+  def show
     render :json => {
       :pending  => Commit.pending.count,
       :rejected => Commit.rejected.count,
