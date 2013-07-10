@@ -6,8 +6,9 @@ gem 'rails-api'
 gem 'figaro'
 gem 'yajl-ruby'
 
-# Github authorization
 gem 'omniauth'
+gem 'omniauth-github'
+gem 'rack-oauth2'
 
 # Debugging
 gem 'pry'

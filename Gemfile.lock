@@ -27,6 +27,7 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.0)
     atomic (1.1.10)
+    attr_required (0.0.5)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.1.4)
@@ -40,12 +41,18 @@ GEM
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
     erubis (2.7.0)
+    faraday (0.8.7)
+      multipart-post (~> 1.1)
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
     hashie (2.0.5)
     hike (1.2.3)
+    httpauth (0.2.0)
+    httpclient (2.3.3)
     i18n (0.6.4)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -53,9 +60,22 @@ GEM
     mime-types (1.23)
     minitest (4.7.5)
     multi_json (1.7.7)
+    multipart-post (1.2.0)
+    oauth2 (0.8.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      rack (~> 1.2)
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
+    omniauth-github (1.1.0)
+      omniauth (~> 1.0)
+      omniauth-oauth2 (~> 1.1)
+    omniauth-oauth2 (1.1.1)
+      oauth2 (~> 0.8.0)
+      omniauth (~> 1.0)
     pg (0.15.1)
     polyglot (0.3.3)
     pry (0.9.12.2)
@@ -69,6 +89,12 @@ GEM
       binding_of_caller (>= 0.7)
       pry (~> 0.9.11)
     rack (1.5.2)
+    rack-oauth2 (1.0.5)
+      activesupport (>= 2.3)
+      attr_required (>= 0.0.5)
+      httpclient (>= 2.2.0.2)
+      multi_json (>= 1.3.6)
+      rack (>= 1.1)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.0.0)
@@ -120,10 +146,12 @@ PLATFORMS
 DEPENDENCIES
   figaro
   omniauth
+  omniauth-github
   pg
   pry
   pry-debugger
   pry-stack_explorer
+  rack-oauth2
   rails (= 4.0.0)
   rails-api
   rails_12factor

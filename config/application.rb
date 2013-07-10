@@ -27,5 +27,10 @@ module GhcrWeb
 
     # Disable the asset pipeline.
     config.assets.enabled = false
+
+    require 'rack/oauth2'
+    config.middleware.use Rack::OAuth2::Server::Resource::Bearer, 'Github Commit Review API' do |req|
+      AccessToken.valid.find_by_token(req.access_token) || req.invalid_token!
+    end
   end
 end
