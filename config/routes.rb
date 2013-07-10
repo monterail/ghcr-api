@@ -5,7 +5,8 @@ GhcrWeb::Application.routes.draw do
 
   scope "/api/v1/:owner/:repo" do
     resources :commits
+    resource :reminder, only: [:show, :create, :update, :destroy]
   end
 
-  resource :stats, :only => :show
+  resource :stats, only: :show
 end
