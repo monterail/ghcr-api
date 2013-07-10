@@ -36,15 +36,18 @@ class CommitsController < ApplicationController
       :committer  => get_user_or_ghost(params[:committer])
     )
 
-    commit.events.create!(
+    event = commit.events.create!(
       :status   => params[:status],
       :reviewer => current_user
     )
+
+    Notification.deliver_rejected(event) if event.status == "rejected"
 
     render :json => commit
   end
 
   protected
+
 
   def current_user
     User.first || User.create(:username => "teamon")

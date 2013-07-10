@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130710162858) do
+ActiveRecord::Schema.define(version: 20130710171305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20130710162858) do
     t.string   "author_type"
     t.integer  "committer_id"
     t.string   "committer_type"
+    t.integer  "last_reviewer_id"
   end
 
   create_table "events", force: true do |t|
