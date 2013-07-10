@@ -1,3 +1,5 @@
 GhcrWeb::Application.routes.draw do
-  resources :commits
+  scope "/api/v1/:owner/:repo" do
+    resources :commits
+  end
 end
