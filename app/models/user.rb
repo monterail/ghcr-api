@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :access_tokens
+  has_many :reminders
 
   def self.get_user_or_ghost(data)
     return nil if data.blank?
