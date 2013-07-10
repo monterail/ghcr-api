@@ -6,7 +6,7 @@ class CommitsController < ApplicationController
     #
     # params[:author] == "teamon"   -> where author = 'teamon'
     # params[:author] == "!teamon"  -> where author <> 'teamon'
-    [:sha, :author, :status].each do |key|
+    [:sha, :status].each do |key| # TODO: author,last_reviewer
       unless params[key].blank?
         params[key].to_s.split(",").each do |e|
           if e =~ /^!(.+)$/
@@ -18,7 +18,7 @@ class CommitsController < ApplicationController
       end
     end
 
-    render :json => commits.to_json
+    render :json => commits
   end
 
   def show
@@ -26,7 +26,36 @@ class CommitsController < ApplicationController
     render :json => commit
   end
 
+  def update
+    sha = params[:id]
+    commit = repo.commits.where(:sha => sha).first
+    commit ||= repo.commits.create!(
+      :sha        => params[:id],
+      :message    => params[:message],
+      :author     => get_user_or_ghost(params[:author]),
+      :committer  => get_user_or_ghost(params[:committer])
+    )
+
+    commit.events.create!(
+      :status   => params[:status],
+      :reviewer => current_user
+    )
+
+    render :json => commit
+  end
+
   protected
+
+  def current_user
+    User.first || User.create(:username => "teamon")
+  end
+
+  def get_user_or_ghost(data)
+    return nil if data.blank?
+    User.where(:username => data[:username]).first ||
+    Ghost.where(:email => data[:email]) ||
+    Ghost.create!(data)
+  end
 
   def repo
     @repo ||= Repository.where(
