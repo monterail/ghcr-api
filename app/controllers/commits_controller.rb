@@ -32,8 +32,8 @@ class CommitsController < ApplicationController
     commit ||= repo.commits.create!(
       :sha        => params[:id],
       :message    => params[:message],
-      :author     => get_user_or_ghost(params[:author]),
-      :committer  => get_user_or_ghost(params[:committer])
+      :author     => User.get_user_or_ghost(params[:author]),
+      :committer  => User.get_user_or_ghost(params[:committer])
     )
 
     event = commit.events.create!(
@@ -53,12 +53,6 @@ class CommitsController < ApplicationController
     User.first || User.create(:username => "teamon")
   end
 
-  def get_user_or_ghost(data)
-    return nil if data.blank?
-    User.where(:username => data[:username]).first ||
-    Ghost.where(:email => data[:email]) ||
-    Ghost.create!(data)
-  end
 
   def repo
     @repo ||= Repository.where(
