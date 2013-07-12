@@ -7,7 +7,7 @@ class Notification
     "szymo"           =>  "szymon",
     "tallica"         =>  "tallica",
     "marcinlerka"     =>  "marcin",
-    "szajbus"         =>  "michal",
+    "szajbus"         =>  "szajbus",
     "jcieslar"        =>  "JakubCieślar",
     "sheerun"         =>  "adam",
     "venticco"        =>  "KrzysztofJung",
