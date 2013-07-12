@@ -1,12 +1,28 @@
 class User < ActiveRecord::Base
   has_many :access_tokens, :dependent => :delete_all
-  has_many :reminders
+  has_many :reminders, :dependent => :delete_all
 
-  def self.get_user_or_ghost(data)
-    return nil if data.blank?
-    User.where(:username => data[:username]).first ||
-    Ghost.where(:email => data[:email]) ||
-    Ghost.create!(data)
+  # Public: Find or create user from github payload
+  #
+  # data - user hash returned from github
+  #        :email - github user email (required)
+  #        :name - github user name (required)
+  #        :username - github user login (optional)
+  def self.find_or_create_from_github(data)
+    user = User.where(:email => data[:email]).first ||
+           User.new(:email => data[:email])
+
+    if user.name != data[:name]
+      user.name = data[:name]
+    end
+
+    if data[:username] && user.username != data[:username]
+      user.username = data[:username] 
+    end
+
+    user.save! if user.changed?
+
+    user
   end
 
   def access_token

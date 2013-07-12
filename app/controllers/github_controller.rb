@@ -9,13 +9,13 @@ class GithubController < ApplicationController
 
     payload["commits"].each do |commit_data|
       if commit_data["distinct"]
-        author = User.get_user_or_ghost(commit_data["author"])
+        author = User.find_or_create_from_github(commit_data["author"])
 
         commit = repo.commits.where(:sha => commit_data["id"]).first || repo.commits.create!({
           :sha => commit_data["id"],
           :message => commit_data["message"],
           :author => author,
-          :committer => User.get_user_or_ghost(commit_data["committer"])
+          :committer => User.find_or_create_from_github(commit_data["committer"])
         })
 
         status =  skip_review?(commit) ? "skipped" : "pending"

@@ -1,8 +1,8 @@
 class Commit < ActiveRecord::Base
   belongs_to :repository
-  belongs_to :author, :polymorphic => true
-  belongs_to :committer, :polymorphic => true
-  belongs_to :last_reviewer, :polymorphic => true
+  belongs_to :author
+  belongs_to :committer
+  belongs_to :last_reviewer
   has_many :events
 
   scope :pending, -> { where(:status => "pending") }
