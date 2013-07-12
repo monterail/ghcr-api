@@ -1,5 +1,13 @@
 # Yes we code
 
+## Installation
+
+```
+bundle install --binstubs
+echo 3000 > ~/.pow/ghcr-web
+rake db:create db:migrate
+rails server
+```
 
 ## Authentication
 
