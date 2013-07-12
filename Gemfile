@@ -12,12 +12,14 @@ gem 'rack-oauth2', require: 'rack/oauth2'
 
 gem 'hipchat-api'
 
-
-# Debugging
-gem 'pry'
-gem 'pry-stack_explorer'
-gem 'pry-debugger'
-gem 'awesome_print'
+group :development do
+  # Debugging
+  gem 'pry'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
+  gem 'awesome_print'
+  gem 'tomdoc'
+end
 
 # Heroku
 gem "rails_12factor"
