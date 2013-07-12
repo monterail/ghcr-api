@@ -10,4 +10,8 @@ class ApplicationController < ActionController::API
   def current_user
     current_token && current_token.user
   end
+
+  def not_found
+    raise ActiveRecord::RecordNotFound
+  end
 end

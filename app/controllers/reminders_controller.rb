@@ -27,15 +27,14 @@ class RemindersController < ApplicationController
     if @reminder
       @reminder.deactivate
     else
-      raise(ActiveRecord::RecordNotFound)
+      not_found
     end
     render nothing: true
   end
 
   private
     def find_repo
-      @repository = Repository.where(owner: params[:owner], name: params[:repo]).first ||
-        raise(ActiveRecord::RecordNotFound)
+      @repository = Repository.where(owner: params[:owner], name: params[:repo]).first || not_found
     end
 
     def find_reminder
