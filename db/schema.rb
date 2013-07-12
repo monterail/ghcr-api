@@ -48,6 +48,13 @@ ActiveRecord::Schema.define(version: 20130710175326) do
     t.string   "reviewer_type"
   end
 
+  create_table "ghosts", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "reminders", force: true do |t|
     t.integer  "hour",          default: 11
     t.boolean  "active",        default: true

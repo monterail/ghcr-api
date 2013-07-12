@@ -7,6 +7,8 @@ require 'rspec/autorun'
 require 'factory_girl_rails'
 require 'database_cleaner'
 
+$:<< File.join(File.dirname(__FILE__))
+
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|

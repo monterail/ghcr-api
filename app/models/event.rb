@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
-  belongs_to :reviewer
   belongs_to :commit
+  belongs_to :reviewer, :class_name => "User"
 
   after_create :update_commit_data
 
