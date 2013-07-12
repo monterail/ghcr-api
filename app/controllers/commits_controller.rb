@@ -56,8 +56,4 @@ class CommitsController < ApplicationController
       :name   => params[:repo]
     ).first || not_found
   end
-
-  def not_found
-    raise ActiveRecord::RecordNotFound
-  end
 end
