@@ -8,7 +8,7 @@ gem 'yajl-ruby'
 
 gem 'omniauth'
 gem 'omniauth-github'
-gem 'rack-oauth2'
+gem 'rack-oauth2', require: 'rack/oauth2'
 
 gem 'hipchat-api'
 
@@ -17,6 +17,7 @@ gem 'hipchat-api'
 gem 'pry'
 gem 'pry-stack_explorer'
 gem 'pry-debugger'
+gem 'awesome_print'
 
 # Heroku
 gem "rails_12factor"

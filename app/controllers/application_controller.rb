@@ -1,3 +1,13 @@
 class ApplicationController < ActionController::API
-  include Authentication
+  def current_token
+    request.env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
+  end
+
+  def authenticate!
+    current_token or raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized
+  end
+
+  def current_user
+    current_token && current_token.user
+  end
 end
