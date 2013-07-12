@@ -1,4 +1,6 @@
 class CommitsController < ApplicationController
+  before_filter :authenticate!
+
   def index
     commits = repo.commits
 

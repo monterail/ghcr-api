@@ -28,6 +28,7 @@ GEM
     arel (4.0.0)
     atomic (1.1.10)
     attr_required (0.0.5)
+    awesome_print (1.1.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.1.4)
@@ -150,6 +151,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   figaro
   hipchat-api
   omniauth

@@ -1,12 +1,12 @@
 GhcrWeb::Application.routes.draw do
-  get "/authorize", to: 'authorizations#new'
+  scope "/api/v1/" do
+    get '/authorize/callback', to: 'authorizations#create', default: { provider: 'github' }
 
-  post "/api/v1/github", :to => "github#payload"
+    scope ":owner/:repo" do
+      resources :commits
+      resource :reminder, only: [:show, :create, :update, :destroy]
+    end
 
-  scope "/api/v1/:owner/:repo" do
-    resources :commits
-    resource :reminder, only: [:show, :create, :update, :destroy]
+    resource :stats, only: :show
   end
-
-  resource :stats, only: :show
 end

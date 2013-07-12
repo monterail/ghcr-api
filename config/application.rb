@@ -13,28 +13,27 @@ Bundler.require(:default, Rails.env)
 
 module GhcrWeb
   class Application < Rails::Application
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
 
-    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
+    config.autoload_paths += [ "#{config.root}/lib" ]
 
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
-
-    config.autoload_paths += %W(
-      #{config.root}/lib
-    )
-
-    # Disable the asset pipeline.
     config.assets.enabled = false
 
-    require 'rack/oauth2'
+    config.middleware.use Rack::MethodOverride
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use ActionDispatch::Flash
+
     config.middleware.use Rack::OAuth2::Server::Resource::Bearer, 'Github Commit Review API' do |req|
-      AccessToken.valid.find_by_token(req.access_token) || req.invalid_token!
+      AccessToken.find_by_token(req.access_token) || req.invalid_token!
     end
+
+    config.middleware.use OmniAuth::Builder do
+      provider :developer unless Rails.env.production?
+      provider :github, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET'], 
+        :request_path => "/api/v1/authorize", :callback_path => "/api/v1/authorize/callback",
+        :provider_ignores_state => true
+    end
+
+    config.secret_key_base = 'ghcr-web'
   end
 end
