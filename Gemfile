@@ -18,7 +18,13 @@ group :development do
   gem 'pry-stack_explorer'
   gem 'pry-debugger'
   gem 'awesome_print'
+
+  # Testing
+  gem 'rake'
   gem 'tomdoc'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 # Heroku

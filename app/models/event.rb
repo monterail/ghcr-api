@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  belongs_to :reviewer, :polymorphic => true
+  belongs_to :reviewer
   belongs_to :commit
 
   after_create :update_commit_data

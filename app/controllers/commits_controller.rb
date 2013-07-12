@@ -34,8 +34,8 @@ class CommitsController < ApplicationController
     commit ||= repo.commits.create!(
       :sha        => params[:id],
       :message    => params[:message],
-      :author     => User.get_user_or_ghost(params[:author]),
-      :committer  => User.get_user_or_ghost(params[:committer])
+      :author     => User.find_or_create_from_github(params[:author]),
+      :committer  => User.find_or_create_from_github(params[:committer])
     )
 
     event = commit.events.create!(
