@@ -25,10 +25,10 @@ class GithubController < ApplicationController
         accept_string = commit.message.to_s[/accepts?:?((.|\s)*)\z/].to_s
         sha_arry      = accept_string.split(/[\s;,]/).map(&:strip).uniq.select {|sha| sha =~ /^[a-z\d]{6,40}$/}
 
-        sha_arry.inject(repo.commits) do |q, sha|
-          q.where("sha ILIKE ?", "#{sha}%")
-        end.each do |commit|
-          commit.events.create(:status => "auto-accepted", :reviewer => author)
+        sha_arry.each do |sha|
+          if commit = repo.commits.where("sha ILIKE ?", "#{sha}%").first
+            commit.events.create(:status => "auto-accepted", :reviewer => author)
+          end
         end
       end
     end

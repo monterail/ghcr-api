@@ -9,6 +9,8 @@ describe GithubController do
       expect {
         post :payload, payload: payload, format: :json
       }.to change { Commit.count }.by(3)
+
+      Commit.all.all? { |c| c.status.should == 'pending' }
       
       expect(response.status).to eq(200)
     end
