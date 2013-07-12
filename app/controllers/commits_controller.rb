@@ -50,12 +50,6 @@ class CommitsController < ApplicationController
 
   protected
 
-
-  def current_user
-    User.first || User.create(:username => "teamon")
-  end
-
-
   def repo
     @repo ||= Repository.where(
       :owner  => params[:owner],
