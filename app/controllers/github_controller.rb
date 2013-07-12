@@ -11,7 +11,7 @@ class GithubController < ApplicationController
       if commit_data["distinct"]
         author = User.get_user_or_ghost(commit_data["author"])
 
-        commit = repo.commits.where(:sha => commit_data["id"]).first || repo.commit.create!({
+        commit = repo.commits.where(:sha => commit_data["id"]).first || repo.commits.create!({
           :sha => commit_data["id"],
           :message => commit_data["message"],
           :author => author,
