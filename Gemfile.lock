@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/szajbus/webhook-payload.git
+  revision: f63d652e9be5f8eed456944857f11b4a22e64c46
+  specs:
+    webhook-payload (1.1.0)
+      multi_json
+      virtus (>= 0.5.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -29,6 +37,7 @@ GEM
     atomic (1.1.10)
     attr_required (0.0.5)
     awesome_print (1.1.0)
+    backports (3.3.3)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.1.4)
@@ -43,6 +52,7 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
+    descendants_tracker (0.0.1)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     factory_girl (4.2.0)
@@ -170,6 +180,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
+    virtus (0.5.5)
+      backports (~> 3.3)
+      descendants_tracker (~> 0.0.1)
     yajl-ruby (1.1.0)
 
 PLATFORMS
@@ -194,4 +207,5 @@ DEPENDENCIES
   rake
   rspec-rails
   tomdoc
+  webhook-payload!
   yajl-ruby

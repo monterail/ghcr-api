@@ -1,21 +1,19 @@
 class GithubController < ApplicationController
   def payload
-    payload = JSON.parse(params[:payload] || request.body)
-    payload.stringify_keys!
+    payload = Webhook::Payload.from_json(params[:payload] || request.body)
 
-    owner, name = payload['repository']['url'].split("/").drop(3).take(2)
-    attrs = {:owner => owner, :name => name}
+    attrs = {:owner => payload.repository.owner.name, :name => payload.repository.name}
     repo = Repository.where(attrs).first || Repository.create!(attrs)
 
-    payload["commits"].each do |commit_data|
-      if commit_data["distinct"]
-        author = User.find_or_create_from_github(commit_data["author"])
+    payload.commits.each do |commit_data|
+      if commit_data.distinct
+        author = User.find_or_create_from_github(commit_data.author)
 
-        commit = repo.commits.where(:sha => commit_data["id"]).first || repo.commits.create!({
-          :sha => commit_data["id"],
-          :message => commit_data["message"],
+        commit = repo.commits.where(:sha => commit_data.id).first || repo.commits.create!({
+          :sha => commit_data.id,
+          :message => commit_data.message,
           :author => author,
-          :committer => User.find_or_create_from_github(commit_data["committer"])
+          :committer => User.find_or_create_from_github(commit_data.committer)
         })
 
         status =  skip_review?(commit) ? "skipped" : "pending"
