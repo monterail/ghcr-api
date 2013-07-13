@@ -3,7 +3,7 @@ class AuthorizationsController < ApplicationController
   def create
     if auth_hash
       if redirect_uri = request.env['omniauth.params']['redirect_uri'] || request.env['omniauth.origin']
-        @user = User.find_or_create_by_email(auth_hash["info"]["email"]) do |u|
+        @user = User.find_or_create_by(email: auth_hash["info"]["email"]) do |u|
           u.name = auth_hash["info"]["name"]
           u.username = auth_hash["info"]["nickname"]
         end
