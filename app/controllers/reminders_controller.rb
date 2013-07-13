@@ -13,7 +13,7 @@ class RemindersController < ApplicationController
   end
 
   def update
-    if reminder && reminder.update_attributes(params[:reminder])
+    if reminder && reminder.update_attributes(reminder_params)
       render status: 200
     else
       render status: 422
@@ -39,6 +39,6 @@ class RemindersController < ApplicationController
     end
 
     def reminder_params
-      params.require(:owner, :repo).permit(:hour)
+      params.require(:reminder).permit(:hour)
     end
 end
