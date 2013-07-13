@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :access_tokens, :dependent => :delete_all
-  has_many :reminders, :dependent => :delete_all
+  has_many :access_tokens, dependent: :delete_all
+  has_many :reminders, dependent: :delete_all
 
   # Public: Find or create user from github payload
   #
@@ -9,15 +9,15 @@ class User < ActiveRecord::Base
   #        :name - github user name (required)
   #        :username - github user login (optional)
   def self.find_or_create_from_github(data)
-    user = User.where(:email => data[:email]).first ||
-           User.new(:email => data[:email])
+    user = User.where(email: data[:email]).first ||
+           User.new(email: data[:email])
 
     if user.name != data[:name]
       user.name = data[:name]
     end
 
     if data[:username] && user.username != data[:username]
-      user.username = data[:username] 
+      user.username = data[:username]
     end
 
     user.save! if user.changed?

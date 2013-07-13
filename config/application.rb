@@ -29,9 +29,9 @@ module GhcrWeb
 
     config.middleware.use OmniAuth::Builder do
       provider :developer unless Rails.env.production?
-      provider :github, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET'], 
-        :request_path => "/api/v1/authorize", :callback_path => "/api/v1/authorize/callback",
-        :provider_ignores_state => true
+      provider :github, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET'],
+        request_path: "/api/v1/authorize", callback_path: "/api/v1/authorize/callback",
+        provider_ignores_state: true
     end
 
     config.secret_key_base = 'ghcr-web'
