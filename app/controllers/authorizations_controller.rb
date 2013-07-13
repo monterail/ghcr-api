@@ -9,10 +9,10 @@ class AuthorizationsController < ApplicationController
         end
         redirect_to URI(redirect_uri).tap { |u| u.fragment = "access_token=#{@user.access_token.token}&token_type=bearer" }.to_s
       else
-        render json: { error: "No redirect_uri provided" }, :status => 422
+        render json: { error: "No redirect_uri provided" }, status: 422
       end
     else
-      render json: { error: "No auth info provided" }, :status => 422
+      render json: { error: "No auth info provided" }, status: 422
     end
   end
 

@@ -2,22 +2,22 @@ class GithubController < ApplicationController
   def payload
     payload = Webhook::Payload.from_json(params[:payload] || request.body)
 
-    attrs = {:owner => payload.repository.owner.name, :name => payload.repository.name}
+    attrs = {owner: payload.repository.owner.name, name: payload.repository.name}
     repo = Repository.where(attrs).first || Repository.create!(attrs)
 
     payload.commits.each do |commit_data|
       if commit_data.distinct
         author = User.find_or_create_from_github(commit_data.author)
 
-        commit = repo.commits.where(:sha => commit_data.id).first || repo.commits.create!({
-          :sha => commit_data.id,
-          :message => commit_data.message,
-          :author => author,
-          :committer => User.find_or_create_from_github(commit_data.committer)
+        commit = repo.commits.where(sha: commit_data.id).first || repo.commits.create!({
+          sha:        commit_data.id,
+          message:    commit_data.message,
+          author:     author,
+          committer:  User.find_or_create_from_github(commit_data.committer)
         })
 
         status =  skip_review?(commit) ? "skipped" : "pending"
-        commit.events.create!(:status => status)
+        commit.events.create!(status: status)
 
         # Auto accept
         accept_string = commit.message.to_s[/accepts?:?((.|\s)*)\z/].to_s
@@ -25,7 +25,7 @@ class GithubController < ApplicationController
 
         sha_arry.each do |sha|
           if commit = repo.commits.where("sha ILIKE ?", "#{sha}%").first
-            commit.events.create(:status => "auto-accepted", :reviewer => author)
+            commit.events.create(status: "auto-accepted", reviewer: author)
           end
         end
       end
