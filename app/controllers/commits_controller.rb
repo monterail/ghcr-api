@@ -10,8 +10,8 @@ class CommitsController < ApplicationController
   end
 
   def show
-    commit = repo.commits.where(sha: params[:sha]).first || not_found
-    render json: commit
+    commit = repo.commits.where(sha: params[:id]).first || not_found
+    render json: commit.response_hash
   end
 
   def update
