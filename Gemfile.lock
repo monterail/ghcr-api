@@ -27,6 +27,8 @@ GEM
       activesupport (= 4.0.0)
       arel (~> 4.0.0)
     activerecord-deprecated_finders (1.0.3)
+    activerecord_any_of (1.0.0)
+      rails (>= 3.2.13, < 5)
     activesupport (4.0.0)
       i18n (~> 0.6, >= 0.6.4)
       minitest (~> 4.2)
@@ -189,6 +191,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord_any_of
   awesome_print
   database_cleaner
   factory_girl_rails
