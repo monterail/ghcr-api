@@ -10,29 +10,33 @@ class Commit < ActiveRecord::Base
 
   def self.query params
     commits = self
-    any_ofs = []
 
     # if value starts with "!" (bang) - negation
     #
-    # params[:author] == "teamon"   -> where author = 'teamon'
-    # params[:author] == "!teamon"  -> where author <> 'teamon'
+    # params[:author] == "teamon,darek"   -> where(author: ['teamon','darek'])
+    # params[:author] == "!teamon,darek"  -> where.not(author: ['teamon','darek'])
     [:sha, :status].reject{ |k| params[k].blank? }.each do |key|
       values = params[key].to_s.split(",")
-      rejected = values.select{ |e| e =~ /^!(.+)$/ }
-      accepted = values - rejected
-      any_ofs << { key => accepted } unless accepted.empty?
-      commits = commits.where.not(key => rejected.map{ |v| v[1..-1] })
+      if values.first =~ /^!(.+)$/
+        values.first[0] = ''
+        commits = commits.where.not(key => values)
+      else
+        commits = commits.where(key => values)
+      end
     end
 
     [:author, :last_reviewer, :committer].reject{ |k| params[k].blank? }.each do |key|
       values = params[key].to_s.split(",")
-      rejected = values.select{ |e| e =~ /^!(.+)$/ }
-      rejected_ids = User.where(username: rejected.map{ |v| v[1..-1] }).pluck(:id)
-      accepted_ids = User.where(username: values - rejected).pluck(:id)
-      commits = commits.where.not("#{key}_id" => rejected_ids)
-      any_ofs << { "#{key}_id" => accepted_ids } unless accepted_ids.empty?
+      if values.first =~ /^!(.+)$/
+        values.first[0] = ''
+        rejected_ids = User.where(username: values).pluck(:id)
+        commits = commits.where.not("#{key}_id" => rejected_ids)
+      else
+        accepted_ids = User.where(username: values).pluck(:id)
+        commits = commits.where("#{key}_id" => accepted_ids)
+      end
     end
 
-    any_ofs.empty? ? commits : commits.any_of(*any_ofs)
+    commits
   end
 end
