@@ -39,4 +39,16 @@ class Commit < ActiveRecord::Base
 
     commits
   end
+
+  def response_hash
+    {
+      id: sha,
+      message: message,
+      timestamp: created_at,
+      author: {
+        username: author.try(:username),
+        name:     author.try(:name)
+      }
+    }
+  end
 end

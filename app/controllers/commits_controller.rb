@@ -2,7 +2,7 @@ class CommitsController < ApplicationController
   before_filter :authenticate!
 
   def index
-    render json: repo.commits.query(params)
+    render json: repo.commits.query(params).map(&:response_hash)
   end
 
   def count
