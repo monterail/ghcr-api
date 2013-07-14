@@ -11,6 +11,8 @@ GhcrWeb::Application.routes.draw do
         end
       end
       resource :reminder, only: [:show, :create, :update, :destroy]
+
+      get '/github/init', to: "github#new"
     end
 
     resource :stats, only: :show
