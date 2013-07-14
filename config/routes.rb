@@ -5,7 +5,11 @@ GhcrWeb::Application.routes.draw do
     post '/github', to: "github#payload"
 
     scope ":owner/:repo" do
-      resources :commits
+      resources :commits do
+        collection do
+          get :count
+        end
+      end
       resource :reminder, only: [:show, :create, :update, :destroy]
     end
 
