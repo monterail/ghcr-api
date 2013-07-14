@@ -1,4 +1,14 @@
 class GithubController < ApplicationController
+  def new
+    pending_count   = repo.commits.query(author: "!#{current_user.username}", status: "pending").count
+    rejected_count  = repo.commits.query(author: current_user.username, status: "rejected").count
+    render json: {
+      rejected_count: rejected_count,
+      pending_count:  pending_count,
+      user:           current_user.username
+    }
+  end
+
   def payload
     payload = Webhook::Payload.from_json(params[:payload] || request.body)
 
@@ -34,8 +44,16 @@ class GithubController < ApplicationController
     head :ok
   end
 
-  def skip_review?(commit)
-    message = commit.message.to_s.downcase
-    message[/merge/] || message[/#?(no|skip)\s?(code\s?)?review/]
-  end
+  private
+    def skip_review?(commit)
+      message = commit.message.to_s.downcase
+      message[/merge/] || message[/#?(no|skip)\s?(code\s?)?review/]
+    end
+
+    def repo
+      @repo ||= Repository.where(
+        owner:  params[:owner],
+        name:   params[:repo]
+      ).first || not_found
+    end
 end
