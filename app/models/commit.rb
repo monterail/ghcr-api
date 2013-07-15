@@ -45,6 +45,7 @@ class Commit < ActiveRecord::Base
       id: sha,
       message: message,
       timestamp: created_at,
+      status: status,
       author: {
         username: author.try(:username),
         name:     author.try(:name)
