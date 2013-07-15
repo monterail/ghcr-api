@@ -2,11 +2,11 @@
 
 ## Installation
 
+
+You need to have setup pointing `http://ghcr-web.dev` to rails app.
 ```
-bundle install --binstubs
-echo 3000 > ~/.pow/ghcr-web
+bundle install
 rake db:create db:migrate
-rails server
 ```
 
 ## Authentication
