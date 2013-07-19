@@ -1,4 +1,6 @@
 class GithubController < ApplicationController
+  before_filter :authenticate!, :only => [:new]
+
   def new
     pending_count   = repo.commits.query(author: "!#{current_user.username}", status: "pending").count
     rejected_count  = repo.commits.query(author: current_user.username, status: "rejected").count
