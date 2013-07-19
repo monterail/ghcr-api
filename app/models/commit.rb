@@ -46,10 +46,7 @@ class Commit < ActiveRecord::Base
       message: message,
       timestamp: created_at,
       status: status,
-      reviewer: {
-        username: events.last.reviewer.try(:username),
-        name: events.last.reviewer.try(:name)
-      },
+      last_event: events.last.try(:response_hash),
       author: {
         username: author.try(:username),
         name:     author.try(:name)
