@@ -7,4 +7,16 @@ class Event < ActiveRecord::Base
   def update_commit_data
     commit.update_attributes!(status: status, last_reviewer: reviewer)
   end
+
+  def response_hash
+    {
+      commit_id: commit.sha,
+      status: status,
+      reviewer: {
+        username: reviewer.try(:username),
+        name: reviewer.try(:name)
+      },
+      created_at: created_at
+    }
+  end
 end
