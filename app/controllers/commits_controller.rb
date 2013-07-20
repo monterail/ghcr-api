@@ -31,7 +31,7 @@ class CommitsController < ApplicationController
 
     Notification.deliver_rejected(event) if event.status == "rejected"
 
-    render json: commit.response_hash
+    render json: commit.reload.response_hash
   end
 
   protected
