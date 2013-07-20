@@ -4,11 +4,16 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate!
+    return true if Rails.env.development? && params[:username].present?
     current_token or raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized
   end
 
   def current_user
-    current_token && current_token.user
+    if Rails.env.development? && params['username'].present?
+      User.where(username: params[:username]).first 
+    else
+      current_token && current_token.user
+    end
   end
 
   def not_found
