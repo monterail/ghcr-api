@@ -24,7 +24,7 @@ class Notification
       commit = event.commit
       username = commit.author.try(:username)
       hipchat_username = HARDCODED_MAPPING[username]
-      hipchat_reviwer = HARDCODED_MAPPING[commit.reviewer.username]
+      hipchat_reviwer = HARDCODED_MAPPING[event.reviewer.username]
 
       unless hipchat_username.blank?
         message  = "@#{hipchat_username} your commit has been rejected by #{hipchat_reviwer}:"
