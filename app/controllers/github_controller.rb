@@ -5,10 +5,11 @@ class GithubController < ApplicationController
     if repo.present?
       pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
       rejected = repo.commits.query(author: current_user.username, status: "rejected")
+
       render json: {
         username: current_user.username,
         rejected: rejected.map(&:response_hash),
-        pending: rejected.map(&:response_hash)
+        pending: pending.map(&:response_hash)
       }
     else
       render json: {
