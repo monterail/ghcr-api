@@ -1,14 +1,22 @@
 class GithubController < ApplicationController
-  before_filter :authenticate!, :only => [:new]
+  before_filter :authenticate!, :only => [:show]
 
-  def new
-    pending_count   = repo.commits.query(author: "!#{current_user.username}", status: "pending").count
-    rejected_count  = repo.commits.query(author: current_user.username, status: "rejected").count
-    render json: {
-      rejected_count: rejected_count,
-      pending_count:  pending_count,
-      user:           current_user.username
-    }
+  def show
+    if repo.present?
+      pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
+      rejected = repo.commits.query(author: current_user.username, status: "rejected")
+      render json: {
+        username: current_user.username,
+        rejected: rejected.map(&:response_hash),
+        pending: rejected.map(&:response_hash)
+      }
+    else
+      render json: {
+        username: current_user.username,
+        rejected: [],
+        pending: []
+      }
+    end
   end
 
   def payload
@@ -56,6 +64,6 @@ class GithubController < ApplicationController
       @repo ||= Repository.where(
         owner:  params[:owner],
         name:   params[:repo]
-      ).first || not_found
+      ).first
     end
 end
