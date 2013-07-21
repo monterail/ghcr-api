@@ -8,8 +8,8 @@ class AuthorizationsController < ApplicationController
           u.username = auth_hash["info"]["nickname"]
         end
         
-        if user.access_token != request.env["omniauth.auth"]
-          user.update_attribute(:access_token, request.env["omniauth.auth"])
+        if user.access_token != auth_hash["credentials"]["token"]
+          user.update_attribute(:access_token, auth_hash["credentials"]["token"])
         end
 
         redirect_to URI(redirect_uri).tap do |url| 
