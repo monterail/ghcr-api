@@ -5,8 +5,8 @@ class GithubController < ApplicationController
     if repo.present?
       pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
       rejected = repo.commits.query(author: current_user.username, status: "rejected")
-      admin = current_user.github.repository("#{repo.owner}/#{repo.name}").permissions.admin
-      connected = admin && current_user.github.hooks("#{repo.owner}/#{repo.name}").any? do |h| 
+      permissions = current_user.github.repository("#{repo.owner}/#{repo.name}").permissions
+      connected = permissions.admin && current_user.github.hooks("#{repo.owner}/#{repo.name}").any? do |h| 
         h.name == "web" && h.config.url == "#{ENV['URL']}/api/v1/github"
       end
 
@@ -14,7 +14,7 @@ class GithubController < ApplicationController
         username: current_user.username,
         rejected: rejected.map(&:response_hash),
         pending: pending.map(&:response_hash),
-        admin: admin,
+        permissions: permissions,
         connected: connected
       }
     else
