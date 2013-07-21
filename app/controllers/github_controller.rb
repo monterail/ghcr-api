@@ -2,10 +2,11 @@ class GithubController < ApplicationController
   before_filter :authenticate!, :only => [:show]
 
   def show
+    permissions = current_user.github.repository("#{params[:owner]}/#{params[:repo]}").permissions
+
     if repo.present?
       pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
       rejected = repo.commits.query(author: current_user.username, status: "rejected")
-      permissions = current_user.github.repository("#{repo.owner}/#{repo.name}").permissions
       connected = if permissions.admin
         current_user.github.hooks("#{repo.owner}/#{repo.name}").any? do |h| 
           h.name == "web" && h.config.url == "#{ENV['URL']}/api/v1/github"
@@ -26,7 +27,7 @@ class GithubController < ApplicationController
         username: current_user.username,
         rejected: [],
         pending: [],
-        admin: false,
+        permissions: permissions,
         connected: false
       }
     end
