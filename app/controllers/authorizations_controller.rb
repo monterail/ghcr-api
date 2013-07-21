@@ -8,8 +8,8 @@ class AuthorizationsController < ApplicationController
           u.username = auth_hash["info"]["nickname"]
         end
         
-        if user.access_token != auth_hash["credentials"]["token"]
-          user.update_attribute(:access_token, auth_hash["credentials"]["token"])
+        if user.github_access_token != auth_hash["credentials"]["token"]
+          user.update_attribute(:github_access_token, auth_hash["credentials"]["token"])
         end
 
         redirect_to URI(redirect_uri).tap { |url| 
