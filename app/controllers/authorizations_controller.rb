@@ -3,11 +3,18 @@ class AuthorizationsController < ApplicationController
   def create
     if auth_hash
       if redirect_uri = request.env['omniauth.params']['redirect_uri'] || request.env['omniauth.origin']
-        @user = User.find_or_create_by(email: auth_hash["info"]["email"]) do |u|
+        user = User.find_or_create_by(email: auth_hash["info"]["email"]) do |u|
           u.name = auth_hash["info"]["name"]
           u.username = auth_hash["info"]["nickname"]
         end
-        redirect_to URI(redirect_uri).tap { |u| u.fragment = "access_token=#{@user.access_token.token}&token_type=bearer" }.to_s
+        
+        if user.access_token != request.env["omniauth.auth"]
+          user.update_attribute(:access_token, request.env["omniauth.auth"])
+        end
+
+        redirect_to URI(redirect_uri).tap do |url| 
+          url.fragment = "access_token=#{user.access_token.token}&token_type=bearer"
+        end.to_s
       else
         render json: { error: "No redirect_uri provided" }, status: 422
       end
