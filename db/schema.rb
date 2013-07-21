@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130710171305) do
+ActiveRecord::Schema.define(version: 20130721000740) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "access_tokens", force: true do |t|
     t.string   "token"
@@ -29,14 +32,25 @@ ActiveRecord::Schema.define(version: 20130710171305) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "author_id"
+    t.string   "author_type"
     t.integer  "committer_id"
+    t.string   "committer_type"
     t.integer  "last_reviewer_id"
+    t.string   "last_reviewer_type"
   end
 
   create_table "events", force: true do |t|
     t.integer  "commit_id"
     t.integer  "reviewer_id"
     t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "reviewer_type"
+  end
+
+  create_table "ghosts", force: true do |t|
+    t.string   "name"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -63,6 +77,7 @@ ActiveRecord::Schema.define(version: 20130710171305) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "access_token"
   end
 
 end

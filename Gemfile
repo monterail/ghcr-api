@@ -12,6 +12,7 @@ gem 'rack-oauth2', require: 'rack/oauth2'
 
 gem 'webhook-payload', git: 'git://github.com/szajbus/webhook-payload.git'
 gem 'hipchat-api'
+gem 'octokit'
 
 group :development do
   # Debugging
