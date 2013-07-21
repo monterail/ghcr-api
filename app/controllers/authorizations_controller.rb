@@ -12,9 +12,9 @@ class AuthorizationsController < ApplicationController
           user.update_attribute(:access_token, auth_hash["credentials"]["token"])
         end
 
-        redirect_to URI(redirect_uri).tap do |url| 
+        redirect_to URI(redirect_uri).tap { |url| 
           url.fragment = "access_token=#{user.access_token.token}&token_type=bearer"
-        end.to_s
+        }.to_s
       else
         render json: { error: "No redirect_uri provided" }, status: 422
       end
