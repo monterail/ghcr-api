@@ -13,6 +13,7 @@ GhcrWeb::Application.routes.draw do
       resource :reminder, only: [:show, :create, :update, :destroy]
 
       get '/', to: "github#show"
+      post '/connect', to: "github#connect"
     end
 
     resource :stats, only: :show

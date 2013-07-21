@@ -6,7 +6,7 @@ class GithubController < ApplicationController
       pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
       rejected = repo.commits.query(author: current_user.username, status: "rejected")
       admin = current_user.github.repository("#{repo.owner}/#{repo.name}").permissions.admin
-      connected = admin && current_user.github.hooks('sheerun/dotfiles').any? do |h| 
+      connected = admin && current_user.github.hooks("#{repo.owner}/#{repo.name}").any? do |h| 
         h.name == "web" && h.config.url == "#{ENV['URL']}/api/v1/github"
       end
 
@@ -26,6 +26,24 @@ class GithubController < ApplicationController
         connected: false
       }
     end
+  end
+
+  def connect
+    admin = current_user.github.repository("#{repo.owner}/#{repo.name}").permissions.admin
+
+    connected = admin && current_user.github.hooks("#{repo.owner}/#{repo.name}").any? do |h| 
+      h.name == "web" && h.config.url == "#{ENV['URL']}/api/v1/github"
+    end
+
+    unless connected
+      current_user.github.create_hook "#{repo.owner}/#{repo.name}", 'web',
+        url: "#{ENV['URL']}/api/v1/github",
+        content_type: 'json'
+    end
+
+    render json: {
+      success: true
+    }
   end
 
   def payload
