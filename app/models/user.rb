@@ -28,4 +28,8 @@ class User < ActiveRecord::Base
   def access_token
     access_tokens.first || access_tokens.create
   end
+
+  def github
+    Octokit::Client.new(:login => username, :oauth_token => github_access_token)
+  end
 end
