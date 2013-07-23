@@ -24,6 +24,11 @@ class CommitsController < ApplicationController
       committer:  User.find_or_create_from_github(params[:committer])
     )
 
+    if commit.author == current_user
+      render status: 401
+      return
+    end
+
     event = commit.events.create!(
       status:   params[:status],
       reviewer: current_user
