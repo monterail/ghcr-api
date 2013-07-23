@@ -25,7 +25,7 @@ class CommitsController < ApplicationController
     )
 
     if commit.author == current_user
-      render status: 401
+      render nothing: true, status: 401
       return
     end
 
