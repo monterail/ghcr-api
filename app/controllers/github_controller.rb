@@ -34,22 +34,26 @@ class GithubController < ApplicationController
   end
 
   def connect
-    repo = repo || Repository.create!(owner: params[:owner], name: params[:repo])
-    admin = current_user.github.repository("#{repo.owner}/#{repo.name}").permissions.admin
+    admin = current_user.github.repository("#{params[:owner]}/#{params[:repo]}").permissions.admin
 
-    connected = admin && current_user.github.hooks("#{repo.owner}/#{repo.name}").any? do |h|
+    unless admin
+      render json: { success: false, reason: "You do not have access to add Github hook for this repo" }
+      return
+    end
+
+    repo = repo || Repository.create!(owner: params[:owner], name: params[:repo])
+
+    connected = current_user.github.hooks(repo.to_s).any? do |h|
       h.name == "web" && h.config.url == "#{ENV['URL']}/api/v1/github"
     end
 
     unless connected
-      current_user.github.create_hook "#{repo.owner}/#{repo.name}", 'web',
+      current_user.github.create_hook repo.to_s, 'web',
         url: "#{ENV['URL']}/api/v1/github",
         content_type: 'json'
     end
 
-    render json: {
-      success: true
-    }
+    render json: { success: true }
   end
 
   def payload
