@@ -8,7 +8,7 @@ class GithubController < ApplicationController
       pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
       rejected = repo.commits.query(author: current_user.username, status: "rejected")
       connected = if permissions.admin
-        current_user.github.hooks("#{repo.owner}/#{repo.name}").any? do |h| 
+        current_user.github.hooks("#{repo.owner}/#{repo.name}").any? do |h|
           h.name == "web" && h.config.url == "#{ENV['URL']}/api/v1/github"
         end
       else
@@ -34,9 +34,10 @@ class GithubController < ApplicationController
   end
 
   def connect
+    repo = repo || Repository.create!(owner: params[:owner], name: params[:repo])
     admin = current_user.github.repository("#{repo.owner}/#{repo.name}").permissions.admin
 
-    connected = admin && current_user.github.hooks("#{repo.owner}/#{repo.name}").any? do |h| 
+    connected = admin && current_user.github.hooks("#{repo.owner}/#{repo.name}").any? do |h|
       h.name == "web" && h.config.url == "#{ENV['URL']}/api/v1/github"
     end
 
