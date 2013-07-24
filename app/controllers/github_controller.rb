@@ -35,14 +35,15 @@ class GithubController < ApplicationController
     end
 
     repo = repo || Repository.create!(owner: params[:owner], name: params[:repo])
+    hook_url = "#{ENV['URL']}/api/v1/github?access_token=#{repo.access_token}"
 
     connected = current_user.github.hooks(repo.to_s).any? do |h|
-      h.name == "web" && h.config.url == "#{ENV['URL']}/api/v1/github"
+      h.name == "web" && h.config.url == hook_url
     end
 
     unless connected
       current_user.github.create_hook repo.to_s, 'web',
-        url: "#{ENV['URL']}/api/v1/github",
+        url: hook_url,
         content_type: 'json'
     end
 
@@ -53,7 +54,13 @@ class GithubController < ApplicationController
     payload = Webhook::Payload.from_json(params[:payload] || request.body)
 
     attrs = {owner: payload.repository.owner.name, name: payload.repository.name}
-    repo = Repository.where(attrs).first || Repository.create!(attrs)
+    repo = Repository.where(attrs).first
+
+    not_found if repo.blank?
+    unless repo.access_token == params[:access_token]
+      head :unauthorized
+      return
+    end
 
     payload.commits.each do |commit_data|
       if commit_data.distinct

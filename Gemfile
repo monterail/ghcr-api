@@ -6,6 +6,8 @@ gem 'rails-api'
 gem 'figaro'
 gem 'yajl-ruby'
 
+gem 'uniquify'
+
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'rack-oauth2', require: 'rack/oauth2'
