@@ -51,7 +51,7 @@ class GithubController < ApplicationController
   end
 
   def payload
-    payload = Webhook::Payload.from_json(params[:payload] || request.body)
+    payload = Webhook::Payload.from_json(params[:payload] || request.body.string)
 
     repo = Repository.find_by!(access_token: params[:repository_token])
 
