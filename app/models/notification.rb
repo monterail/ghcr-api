@@ -23,7 +23,7 @@ class Notification
     def deliver_rejected(event)
       commit = event.commit
       username = commit.author.try(:username)
-      hipchat_username = HARDCODED_MAPPING[username]
+      hipchat_username = HARDCODED_MAPPING[username.downcase]
       hipchat_reviwer = HARDCODED_MAPPING[event.reviewer.username]
 
       unless hipchat_username.blank?
