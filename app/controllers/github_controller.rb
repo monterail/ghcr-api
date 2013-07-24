@@ -35,7 +35,7 @@ class GithubController < ApplicationController
     end
 
     repo = repo || Repository.create!(owner: params[:owner], name: params[:repo])
-    hook_url = "#{ENV['URL']}/api/v1/github?access_token=#{repo.access_token}"
+    hook_url = "#{ENV['URL']}/api/v1/github?repository_token=#{repo.access_token}"
 
     connected = current_user.github.hooks(repo.to_s).any? do |h|
       h.name == "web" && h.config.url == hook_url
@@ -53,7 +53,7 @@ class GithubController < ApplicationController
   def payload
     payload = Webhook::Payload.from_json(params[:payload] || request.body)
 
-    repo = Repository.find_by!(access_token: params[:access_token])
+    repo = Repository.find_by!(access_token: params[:repository_token])
 
     payload.commits.each do |commit_data|
       if commit_data.distinct
