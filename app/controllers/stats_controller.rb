@@ -1,10 +1,13 @@
 class StatsController < ApplicationController
   def show
+    shas = params[:repos].to_s.split(',')
+    repos = Repository.where(:access_token => shas).pluck(&:id)
+    chain_start = Commit.where(:repository_id => repos.map(&:id))
     render json: {
-      pending:  Commit.pending.count,
-      rejected: Commit.rejected.count,
-      pending_per_project: per_repo_count(Commit.pending),
-      rejected_per_project: per_repo_count(Commit.rejected)
+      pending:  chain_start.pending.count,
+      rejected: chain_start.rejected.count,
+      pending_per_project: per_repo_count(chain_start.pending),
+      rejected_per_project: per_repo_count(chain_start.rejected)
     }
   end
 
