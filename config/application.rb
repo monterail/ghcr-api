@@ -31,7 +31,7 @@ module GhcrWeb
       provider :developer unless Rails.env.production?
       provider :github, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET'],
         request_path: "/api/v1/authorize", callback_path: "/api/v1/authorize/callback",
-        provider_ignores_state: true, scope: 'repo'
+        provider_ignores_state: true, scope: 'repo user:email'
     end
 
     config.secret_key_base = 'ghcr-web'
