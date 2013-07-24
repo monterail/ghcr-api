@@ -35,7 +35,7 @@ class GithubController < ApplicationController
     end
 
     repo = repo || Repository.create!(owner: params[:owner], name: params[:repo])
-    hook_url = "#{ENV['URL']}/api/v1/github?repository_token=#{repo.access_token}"
+    hook_url = "#{ENV['URL']}/api/v1/github/#{repo.access_token}"
 
     connected = current_user.github.hooks(repo.to_s).any? do |h|
       h.name == "web" && h.config.url == hook_url
