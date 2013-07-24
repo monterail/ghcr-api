@@ -25,7 +25,7 @@ class CommitsController < ApplicationController
     )
 
     if commit.author == current_user
-      render nothing: true, status: 401
+      head :unauthorized
       return
     end
 

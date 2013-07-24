@@ -30,7 +30,7 @@ class GithubController < ApplicationController
     admin = current_user.github.repository("#{params[:owner]}/#{params[:repo]}").permissions.admin
 
     unless admin
-      render json: { success: false, reason: "You do not have access to add Github hook for this repo" }
+      render status: :unauthorized, json: { reason: "You do not have access to add Github hook for this repo" }
       return
     end
 
@@ -47,7 +47,7 @@ class GithubController < ApplicationController
         content_type: 'json'
     end
 
-    render json: { success: true }
+    head :ok
   end
 
   def payload

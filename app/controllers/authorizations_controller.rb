@@ -7,19 +7,19 @@ class AuthorizationsController < ApplicationController
           u.name = auth_hash["info"]["name"]
           u.username = auth_hash["info"]["nickname"]
         end
-        
+
         if user.github_access_token != auth_hash["credentials"]["token"]
           user.update_attribute(:github_access_token, auth_hash["credentials"]["token"])
         end
 
-        redirect_to URI(redirect_uri).tap { |url| 
+        redirect_to URI(redirect_uri).tap { |url|
           url.fragment = "access_token=#{user.access_token.token}&token_type=bearer"
         }.to_s
       else
-        render json: { error: "No redirect_uri provided" }, status: 422
+        render status: :unprocessable_entity, json: { error: "No redirect_uri provided" }
       end
     else
-      render json: { error: "No auth info provided" }, status: 422
+      render status: :unprocessable_entity, json: { error: "No auth info provided" }
     end
   end
 
