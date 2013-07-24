@@ -53,14 +53,7 @@ class GithubController < ApplicationController
   def payload
     payload = Webhook::Payload.from_json(params[:payload] || request.body)
 
-    attrs = {owner: payload.repository.owner.name, name: payload.repository.name}
-    repo = Repository.where(attrs).first
-
-    not_found if repo.blank?
-    unless repo.access_token == params[:access_token]
-      head :unauthorized
-      return
-    end
+    repo = Repository.find_by!(access_token: params[:access_token])
 
     payload.commits.each do |commit_data|
       if commit_data.distinct
