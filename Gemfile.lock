@@ -191,6 +191,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
+    uniquify (0.1.0)
     virtus (0.5.5)
       backports (~> 3.3)
       descendants_tracker (~> 0.0.1)
@@ -219,5 +220,6 @@ DEPENDENCIES
   rake
   rspec-rails
   tomdoc
+  uniquify
   webhook-payload!
   yajl-ruby
