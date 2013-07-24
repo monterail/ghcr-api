@@ -14,9 +14,9 @@ class RemindersController < ApplicationController
 
   def update
     if reminder && reminder.update_attributes(reminder_params)
-      render status: 200
+      render nothing: true
     else
-      render status: 422
+      head :unprocessable_entity
     end
   end
 
