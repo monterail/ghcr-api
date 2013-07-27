@@ -64,7 +64,7 @@ class GithubController < ApplicationController
           message:    commit_data.message,
           author:     author,
           committer:  User.find_or_create_from_github(commit_data.committer),
-          commited_at:Time.zone.parse(commit_data.timestamp)
+          commited_at:commit_data.timestamp
         })
 
         status =  skip_review?(commit) ? "skipped" : "pending"
