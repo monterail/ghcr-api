@@ -4,6 +4,10 @@ class Repository < ActiveRecord::Base
 
   uniquify :access_token, :length => 10
 
+  def next_pending
+    commits.pending.order("commited_at ASC").first
+  end
+
   def to_s
     "#{owner}/#{name}"
   end

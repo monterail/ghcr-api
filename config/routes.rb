@@ -8,6 +8,7 @@ GhcrWeb::Application.routes.draw do
       resources :commits do
         collection do
           get :count
+          get :next
         end
       end
       resource :reminder, only: [:show, :create, :update, :destroy]
