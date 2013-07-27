@@ -17,7 +17,7 @@ class CommitsController < ApplicationController
   def next
     commit = repo.next_pending
     if request.xhr?
-      render json: commit.try(:sha)
+      render json: { id: commit.try(:sha) }
     else
       redirect_to "//github.com/#{repo.to_s}#{"/commit/#{commit.sha}" if commit.present?}"
     end
