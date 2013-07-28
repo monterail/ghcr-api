@@ -10,6 +10,9 @@ GhcrWeb::Application.routes.draw do
           get :count
           get :next
         end
+        member do
+          get :next
+        end
       end
       resource :reminder, only: [:show, :create, :update, :destroy]
 

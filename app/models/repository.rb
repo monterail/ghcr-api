@@ -4,8 +4,12 @@ class Repository < ActiveRecord::Base
 
   uniquify :access_token, :length => 10
 
-  def next_pending
-    commits.pending.order("commited_at ASC").first
+  def next_pending sha = nil
+    query = commits.pending.order("commited_at ASC")
+    if sha && commit = Commit.find_by_sha(sha)
+      query = query.where(["commited_at > ?", commit.commited_at])
+    end
+    query.first
   end
 
   def to_s
