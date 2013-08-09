@@ -13,6 +13,7 @@ class GithubController < ApplicationController
         rejected: rejected.map(&:response_hash),
         pending: pending.map(&:response_hash),
         permissions: permissions,
+        token: repo.access_token,
         connected: true
       }
     else
@@ -21,6 +22,7 @@ class GithubController < ApplicationController
         rejected: [],
         pending: [],
         permissions: permissions,
+        token: "",
         connected: false
       }
     end
