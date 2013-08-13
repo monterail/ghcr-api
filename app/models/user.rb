@@ -32,4 +32,10 @@ class User < ActiveRecord::Base
   def github
     Octokit::Client.new(:login => username, :oauth_token => github_access_token)
   end
+
+  def permissions(repo_name)
+    Rails.cache.fetch(expires_in: 1.day) do
+      github.repository(repo_name).permissions
+    end
+  end
 end

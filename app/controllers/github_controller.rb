@@ -2,8 +2,6 @@ class GithubController < ApplicationController
   before_filter :authenticate!, :only => [:show]
 
   def show
-    permissions = current_user.github.repository("#{params[:owner]}/#{params[:repo]}").permissions
-
     if repo.present?
       pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
       rejected = repo.commits.query(author: current_user.username, status: "rejected")
@@ -12,7 +10,7 @@ class GithubController < ApplicationController
         username: current_user.username,
         rejected: rejected.map(&:response_hash),
         pending: pending.map(&:response_hash),
-        permissions: permissions,
+        permissions: current_user.permissions(repo_name),
         token: repo.access_token,
         connected: true
       }
@@ -21,7 +19,7 @@ class GithubController < ApplicationController
         username: current_user.username,
         rejected: [],
         pending: [],
-        permissions: permissions,
+        permissions: current_user.permissions(repo_name),
         token: "",
         connected: false
       }
@@ -29,9 +27,7 @@ class GithubController < ApplicationController
   end
 
   def connect
-    admin = current_user.github.repository("#{params[:owner]}/#{params[:repo]}").permissions.admin
-
-    unless admin
+    unless current_user.permissions(repo_name)
       render status: :unauthorized, json: { reason: "You do not have access to add Github hook for this repo" }
       return
     end
@@ -99,4 +95,9 @@ class GithubController < ApplicationController
         name:   params[:repo]
       ).first
     end
+
+    def repo_name
+      "#{params[:owner]}/#{params[:repo]}"
+    end
+
 end
