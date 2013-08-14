@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def github
-    Octokit::Client.new(:login => username, :oauth_token => github_access_token)
+    Octokit::Client.new(:login => username, :oauth_token => github_access_token, :auto_traversal => true)
   end
 
   def permissions(repo_name)
