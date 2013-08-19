@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   end
 
   def permissions(repo_name)
-    Rails.cache.fetch(expires_in: 1.day) do
+    Rails.cache.fetch("user_permissions_#{id}_#{repo_name}", expires_in: 1.day) do
       github.repository(repo_name).permissions
     end
   end
