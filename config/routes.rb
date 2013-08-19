@@ -4,6 +4,7 @@ GhcrWeb::Application.routes.draw do
 
     post '/github/:repository_token', to: "github#payload"
 
+    get '/init', to: 'users#show'
     scope ":owner/:repo" do
       resources :commits do
         collection do
