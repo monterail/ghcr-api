@@ -8,12 +8,12 @@ class Notification
     "tallica"         =>  "tallica",
     "marcinlerka"     =>  "marcin",
     "szajbus"         =>  "szajbus",
-    "jcieslar"        =>  "JakubCieślar",
+    "jcieslar"        =>  "jakub",
     "sheerun"         =>  "adam",
     "venticco"        =>  "KrzysztofJung",
     "jandudulski"     =>  "jan",
-    "michlask"        =>  "MichalLaskowski",
-    "ostrzy"          =>  "MichałDuda",
+    "michlask"        =>  "michal",
+    "ostrzy"          =>  "ostrzy",
     "szkarol"         =>  "karol",
     "dmilith"         =>  "dmilith"
   }
