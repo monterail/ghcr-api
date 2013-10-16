@@ -24,10 +24,10 @@ class Notification
       commit = event.commit
       username = commit.author.try(:username)
       hipchat_username = HARDCODED_MAPPING[username.downcase]
-      hipchat_reviwer = HARDCODED_MAPPING[event.reviewer.username]
+      hipchat_reviewer = HARDCODED_MAPPING[event.reviewer.username]
 
       unless hipchat_username.blank?
-        message  = "@#{hipchat_username} your commit has been rejected by #{hipchat_reviwer}: "
+        message  = "@#{hipchat_username} your commit has been rejected by #{hipchat_reviewer}: "
         message << "https://github.com/#{commit.repository.to_s}/commit/#{commit.sha}"
         hipchat_api.rooms_message(Figaro.env.hipchat_room, "GHCR", message, 1, 'red', 'text')
       end
