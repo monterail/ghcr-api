@@ -7,15 +7,24 @@ class StatsController < ApplicationController
       pending:  chain_start.pending.count,
       rejected: chain_start.rejected.count,
       pending_per_project: per_repo_count(chain_start.pending, repos),
-      rejected_per_project: per_repo_count(chain_start.rejected, repos)
+      rejected_per_project: per_repo_count(chain_start.rejected, repos),
+      pending_per_author: per_author_count(chain_start.pending),
+      rejected_per_author: per_author_count(chain_start.rejected)
     }
   end
 
   private
-    def per_repo_count query, repos
+    def per_repo_count(query, repos)
       counts = Hash[query.count(group: :repository_id)]
       Hash[repos.map do |r_id, name|
         [name, counts[r_id].to_i]
+      end]
+    end
+
+    def per_author_count(query)
+      counts = Hash[query.count(group: :author_id)]
+      Hash[counts.map do |author_id, count|
+        [User.find(author_id).name, count.to_i]
       end]
     end
 end
