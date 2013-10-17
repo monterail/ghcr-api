@@ -74,7 +74,7 @@ class GithubController < ApplicationController
         sha_arry      = accept_string.split(/[\s;,]/).map(&:strip).uniq.select {|sha| sha =~ /^[a-z\d]{6,40}$/}
 
         sha_arry.each do |sha|
-          if commit = repo.commits.where("sha ILIKE ?", "#{sha}%").first
+          if commit = repo.commits.find_by_sha(sha)
             commit.events.create(status: "auto-accepted", reviewer: author)
           end
         end
