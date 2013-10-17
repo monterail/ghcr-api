@@ -30,4 +30,8 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  def fixture(file)
+    File.read(File.join(File.dirname(__FILE__), 'fixtures', file))
+  end
 end
