@@ -22,17 +22,3 @@ module MessageAnalyzer
   end
 end
 
-class C
-  def message
-    <<-MSG
-    Test
-    no code review
-    accepts: foo,2421451,bbabcb66 bbbc; 71763126
-    MSG
-  end
-
-  include MessageAnalyzer
-end
-
-a = C.new
-a.accepted_shas
