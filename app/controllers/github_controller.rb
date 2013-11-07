@@ -66,16 +66,14 @@ class GithubController < ApplicationController
           commited_at:commit_data.timestamp
         })
 
-        status =  skip_review?(commit) ? "skipped" : "pending"
+        commit.extend(MessageAnalyzer)
+
+        status = commit.skip_review? ? "skipped" : "pending"
         commit.events.create!(status: status)
 
-        # Auto accept
-        accept_string = commit.message.to_s[/accepts?:?((.|\s)*)\z/].to_s
-        sha_arry      = accept_string.split(/[\s;,]/).map(&:strip).uniq.select {|sha| sha =~ /^[a-z\d]{6,40}$/}
-
-        sha_arry.each do |sha|
-          if commit = repo.commits.where("sha ILIKE ?", "#{sha}%").first
-            commit.events.create(status: "auto-accepted", reviewer: author)
+        commit.accepted_shas.each do |sha|
+          if c = repo.commits.find_by_sha(sha)
+            c.events.create(:status => "auto-accepted", :reviewer => author)
           end
         end
       end
@@ -85,10 +83,6 @@ class GithubController < ApplicationController
   end
 
   private
-    def skip_review?(commit)
-      message = commit.message.to_s.downcase
-      message[/merge/] || message[/#?(no|skip)\s?(code\s?)?review/]
-    end
 
     def repo
       @repo ||= Repository.where(
