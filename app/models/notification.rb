@@ -15,7 +15,10 @@ class Notification
     "michlask"        =>  "michal",
     "ostrzy"          =>  "ostrzy",
     "szkarol"         =>  "karol",
-    "dmilith"         =>  "dmilith"
+    "dmilith"         =>  "dmilith",
+    "ktatomir"        =>  "kasia",
+    "tupaja"          =>  "lukasz",
+    "thion"           =>  "kamil"
   }
 
 
