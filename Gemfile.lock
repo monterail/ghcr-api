@@ -204,6 +204,7 @@ DEPENDENCIES
   awesome_print
   database_cleaner
   factory_girl_rails
+  faraday
   figaro
   hipchat-api
   octokit
