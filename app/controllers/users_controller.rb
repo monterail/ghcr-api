@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     user_repositories = Rails.cache.fetch("user_repositories_#{current_user.id}", expires_in: 1.hour) do
       current_user.github.repositories +
       current_user.github.organizations.map do |org|
-        current_user.github.org_repos(org.login) 
+        current_user.github.org_repos(org.login)
       end.flatten(1)
     end
 
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
         private: repo.private,
         url: repo.url,
         permissions: repo.permissions,
-        connected: ghcr_repo.present?,
+        connected: !!ghcr_repo.try(:connected),
         pending_count: pending,
         rejected_count: rejected
       }
