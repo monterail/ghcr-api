@@ -43,6 +43,7 @@ class GithubController < ApplicationController
       current_user.github.create_hook repo.to_s, 'web',
         url: hook_url,
         content_type: 'json'
+      repo.update_attribute :connected, true
     end
 
     head :ok
