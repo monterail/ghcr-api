@@ -32,7 +32,7 @@ class GithubController < ApplicationController
       return
     end
 
-    repo = repo || Repository.create!(owner: params[:owner], name: params[:repo])
+    repo = Repository.find_or_create_by!(owner: params[:owner], name: params[:repo])
     hook_url = "#{ENV['URL']}/api/v1/github/#{repo.access_token}"
 
     connected = current_user.github.hooks(repo.to_s).any? do |h|
