@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '4.0.0'
-gem 'pg'
+gem 'pg', ">= 0.17.0"
 gem 'rails-api'
 gem 'figaro'
 gem 'yajl-ruby'
