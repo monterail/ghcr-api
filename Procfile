@@ -1,1 +1,1 @@
-web: bin/rails server -p $PORT -e $RAILS_ENV
+web: web: rackup -p $PORT
