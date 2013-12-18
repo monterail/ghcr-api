@@ -61,6 +61,7 @@ class GithubController < ApplicationController
 
         commit = repo.commits.where(sha: commit_data.id).first || repo.commits.create!({
           sha:        commit_data.id,
+          ref:        payload.try(:ref),
           message:    commit_data.message,
           author:     author,
           committer:  User.find_or_create_from_github(commit_data.committer),
