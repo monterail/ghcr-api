@@ -1,4 +1,5 @@
 class Notification
+  # github username => hipchat mention
   HARDCODED_MAPPING = {
     "chytreg"         =>  "dariusz",
     "teamon"          =>  "tymon",
