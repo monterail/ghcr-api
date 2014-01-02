@@ -18,7 +18,8 @@ class Notification
     "dmilith"         =>  "dmilith",
     "ktatomir"        =>  "kasia",
     "tupaja"          =>  "lukasz",
-    "thion"           =>  "kamil"
+    "thion"           =>  "kamil",
+    "proapi"          =>  "proapi"
   }
 
 
