@@ -7,7 +7,6 @@ class Notification
     "bartoszpietrzak" =>  "bartosz",
     "szymo"           =>  "szymon",
     "tallica"         =>  "tallica",
-    "marcinlerka"     =>  "marcin",
     "szajbus"         =>  "szajbus",
     "jcieslar"        =>  "jakub",
     "sheerun"         =>  "adam",
