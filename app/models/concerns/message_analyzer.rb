@@ -1,6 +1,6 @@
 module MessageAnalyzer
   SKIP_REVIEW_PATTERNS = [
-    /#?(skip|no)\s?(code\s?)?review/i,
+    /\[\s*(no|skip)\s*review\s*\]/,
     /\AMerge/
   ]
 
