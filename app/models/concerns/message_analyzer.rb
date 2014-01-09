@@ -1,7 +1,7 @@
 module MessageAnalyzer
   SKIP_REVIEW_PATTERNS = [
-    /\[\s*(no|skip)\s*review\s*\]/,
-    /\AMerge/
+    /\[\s*(no|skip)\s*review\s*\]/i,
+    /\Amerge/i
   ]
 
   ACCEPT_PATTERN = /accepts?:?(.+)/i
