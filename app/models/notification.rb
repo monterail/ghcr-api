@@ -19,7 +19,8 @@ class Notification
     "ktatomir"        =>  "kasia",
     "tupaja"          =>  "lukasz",
     "thion"           =>  "kamil",
-    "proapi"          =>  "proapi"
+    "proapi"          =>  "proapi",
+    "trzewiczek"      =>  "trzewiczek"
   }
 
 
