@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+echo "* Bundle install"
+bundle install
+
+echo "* Copy sample configuration files"
+cp config/database.sample.yml config/database.yml
+cp config/application.sample.yml config/application.yml
+
+echo "* Create databases, run migrations"
+bundle exec rake db:create db:migrate
