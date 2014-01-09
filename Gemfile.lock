@@ -155,6 +155,10 @@ GEM
       rspec-mocks (~> 2.14.0)
     ruby_parser (3.2.2)
       sexp_processor (~> 4.1)
+    sentry-raven (0.7.1)
+      faraday (>= 0.7.6)
+      hashie (>= 1.1.0)
+      uuidtools
     sexp_processor (4.2.1)
     slop (3.4.7)
     sprockets (2.10.1)
@@ -178,6 +182,7 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (0.3.38)
     uniquify (0.1.0)
+    uuidtools (2.1.4)
     virtus (0.5.5)
       backports (~> 3.3)
       descendants_tracker (~> 0.0.1)
@@ -203,6 +208,7 @@ DEPENDENCIES
   rails_12factor
   rake
   rspec-rails
+  sentry-raven
   tomdoc
   uniquify
   webhook-payload!
