@@ -12,7 +12,7 @@ describe MessageAnalyzer do
   end
 
   it "should skip review for 'skip code review' message" do
-    commit = build_commit("skip code review")
+    commit = build_commit("[skip review]")
     expect(commit.skip_review?).to be_true
   end
 
@@ -27,8 +27,16 @@ describe MessageAnalyzer do
   end
 
   it "should analyze multiline messages" do
-    commit = build_commit("Added some files\n#noreview\naccepts: abcdef")
+    commit = build_commit("[no review] Added some files\naccepts: abcdef")
     expect(commit.skip_review?).to be_true
     expect(commit.accepted_shas).to eq(%w(abcdef))
+  end
+
+  it "should be case insensitive" do
+    commit = build_commit("[SkIp ReViEw]")
+    expect(commit.skip_review?).to be_true
+
+    commit = build_commit("merge branch 'feature' into master")
+    expect(commit.skip_review?).to be_true
   end
 end
