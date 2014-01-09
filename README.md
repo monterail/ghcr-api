@@ -5,8 +5,7 @@
 
 You need to have setup pointing `http://ghcr-web.dev` to rails app.
 ```
-bundle install
-rake db:create db:migrate
+bin/setup
 ```
 
 ## Authentication

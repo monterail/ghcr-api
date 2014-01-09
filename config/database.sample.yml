@@ -1,0 +1,19 @@
+development:
+  adapter: postgresql
+  database: ghcr_web_development
+  username:
+  password:
+  pool: 5
+  timeout: 5000
+  port: 5432
+  host: localhost
+
+test:
+  adapter: postgresql
+  database: ghcr_web_test
+  username:
+  password:
+  pool: 5
+  timeout: 5000
+  port: 5432
+  host: localhost
