@@ -8,8 +8,6 @@ class Commit < ActiveRecord::Base
   scope :pending, -> { where(status: "pending") }
   scope :rejected, -> { where(status: "rejected") }
 
-  default_scope -> { order('commited_at DESC') }
-
   def self.find_by_sha(sha)
     where("sha ILIKE ?", "#{sha}%").first
   end
