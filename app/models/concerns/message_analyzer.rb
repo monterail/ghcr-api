@@ -9,7 +9,7 @@ module MessageAnalyzer
   SHA_PATTERN = /[a-f\d]{6,40}/i
 
   def skip_review?
-    SKIP_REVIEW_PATTERNS.any? { |pattern| message =~ pattern }
+    SKIP_REVIEW_PATTERNS.any? { |pattern| message =~ pattern } or (committer and !committer.monterail_member?)
   end
 
   def accepted_shas
