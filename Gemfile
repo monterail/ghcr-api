@@ -17,6 +17,7 @@ gem 'webhook-payload', git: 'git://github.com/szajbus/webhook-payload.git'
 gem 'hipchat-api'
 gem 'octokit'
 gem 'pry-rails'
+gem 'sentry-raven'
 
 group :development do
   # Debugging
