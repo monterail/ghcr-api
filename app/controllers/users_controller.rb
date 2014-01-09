@@ -24,6 +24,7 @@ class UsersController < ApplicationController
         full_name: repo.full_name,
         private: repo.private,
         url: repo.url,
+        html_url: repo.html_url,
         permissions: repo.permissions,
         connected: !!ghcr_repo.try(:connected),
         pending_count: pending,
