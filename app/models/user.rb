@@ -38,4 +38,9 @@ class User < ActiveRecord::Base
       github.repository(repo_name).permissions
     end
   end
+
+  # now this is the simplest and the fastest way to do it
+  def monterail_member?
+    Notification::HARDCODED_MAPPING.keys.include?(username.to_s.downcase)
+  end
 end

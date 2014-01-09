@@ -39,4 +39,16 @@ describe MessageAnalyzer do
     commit = build_commit("merge branch 'feature' into master")
     expect(commit.skip_review?).to be_true
   end
+
+  it "should skip when committer is not from monterail" do
+    commit = build_commit('Something')
+    commit.committer = User.new(username: 'not-from-monterail')
+    expect(commit.skip_review?).to be_true
+  end
+
+  it "should not skip when committer is from monterail" do
+    commit = build_commit('Something')
+    commit.committer = User.new(username: 'chytreg')
+    expect(commit.skip_review?).to be_false
+  end
 end
