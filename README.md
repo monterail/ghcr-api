@@ -39,3 +39,11 @@ Setup YOUR_HOMEPAGE_URL in [chrome extension](https://github.com/monterail/ghcr)
 
 - `/api/v1/authorize?redirect_uri=http://github.com/foo/bar` authorizes app, generates access token and redirects to redirect_uri with access_token in fragment
 - `/api/v1/commits?access_token=xyz` authorizes as user connected with access_token
+
+### Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
