@@ -1,14 +1,13 @@
-# Yes we code
+## GitHub code review API for [chrome extension](https://github.com/monterail/ghcr)
 
-
-## Installation
+### Development
 
 You need to have setup pointing `http://ghcr-web.dev` to rails app.
 ```
 bin/setup
 ```
 
-## Authentication
+### Authentication
 
 `/api/v1/authorize?redirect_uri=http://github.com/foo/bar` authorizes app, generates access token and redirects to redirect_uri with access_token in fragment
 
