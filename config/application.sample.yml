@@ -1,5 +1,6 @@
-GITHUB_CLIENT_ID: 8b93eeb9d0877e33c733
-GITHUB_CLIENT_SECRET: 1a87e0d78aba3c3422800b8a440197ad791e879d
-RAVEN_DSN: ""
-HIPCHAT_TOKEN: ""
-HIPCHAT_ROOM: ""
+URL: http://ghcr-web.dev  # required
+GITHUB_CLIENT_ID: ""      # required
+GITHUB_CLIENT_SECRET: ""  # required
+RAVEN_DSN: ""             # optional
+HIPCHAT_TOKEN: ""         # optional
+HIPCHAT_ROOM: ""          # optional
