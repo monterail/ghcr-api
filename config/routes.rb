@@ -1,4 +1,4 @@
-GhcrWeb::Application.routes.draw do
+GhcrApi::Application.routes.draw do
   scope "/api/v1/" do
     get '/authorize/callback', to: 'authorizations#create', default: { provider: 'github' }
 

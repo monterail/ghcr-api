@@ -2,16 +2,16 @@
 
 ### Installation
 ```
-git clone git@github.com:monterail/ghcr-web.git
-cd ghcr-web
+git clone git@github.com:monterail/ghcr-api.git
+cd ghcr-api
 bin/setup
 ```
-Create [Heroku application](https://github.com/monterail/ghcr-web#Heroku) (optional)
+Create [Heroku application](https://github.com/monterail/ghcr-api#Heroku) (optional)
 
 Create [GitHub OAuth application](https://github.com/settings/applications/new)
 
 - Application name: 'My GHCR Instance'
-- Homepage URL: 'http://ghcr-web.dev' or 'http://my-heroku-app.com'
+- Homepage URL: 'http://ghcr-api.dev' or 'http://my-heroku-app.com'
 - Authorization callback URL: 'YOUR_HOMEPAGE_URL/api/v1/authorize/callback'
 
 Edit `config/application.yml`

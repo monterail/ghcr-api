@@ -11,7 +11,7 @@ require "action_mailer/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
-module GhcrWeb
+module GhcrApi
   class Application < Rails::Application
 
     config.autoload_paths += [ "#{config.root}/lib" ]
@@ -34,6 +34,6 @@ module GhcrWeb
         provider_ignores_state: true, scope: 'repo user:email'
     end
 
-    config.secret_key_base = 'ghcr-web'
+    config.secret_key_base = 'ghcr-api'
   end
 end
