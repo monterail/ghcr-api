@@ -2,4 +2,4 @@
 require File.expand_path('../application', __FILE__)
 
 # Initialize the Rails application.
-GhcrWeb::Application.initialize!
+GhcrApi::Application.initialize!

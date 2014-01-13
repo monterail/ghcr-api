@@ -1,4 +1,4 @@
-URL: http://ghcr-web.dev  # required
+URL: http://ghcr-api.dev  # required
 GITHUB_CLIENT_ID: ""      # required
 GITHUB_CLIENT_SECRET: ""  # required
 RAVEN_DSN: ""             # optional
