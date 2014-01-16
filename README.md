@@ -1,4 +1,4 @@
-## GitHub code review API for [chrome extension](https://github.com/monterail/ghcr)
+## GitHub code review API for [browser extension](https://github.com/monterail/ghcr)
 
 ### Installation
 ```
@@ -33,7 +33,7 @@ git push heroku master
 rake figaro:heroku
 ```
 
-Setup YOUR_HOMEPAGE_URL in [chrome extension](https://github.com/monterail/ghcr)
+Setup YOUR_HOMEPAGE_URL in [browser extension](https://github.com/monterail/ghcr)
 
 ### Authentication
 
