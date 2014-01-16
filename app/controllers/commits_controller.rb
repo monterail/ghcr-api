@@ -15,7 +15,7 @@ class CommitsController < ApplicationController
   end
 
   def next
-    commit = repo.next_pending(params[:id])
+    commit = repo.next_pending(params[:id], current_user)
     if request.xhr?
       render json: { id: commit.try(:sha) }
     else

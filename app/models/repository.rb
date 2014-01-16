@@ -18,8 +18,9 @@ class Repository < ActiveRecord::Base
     end
   end
 
-  def next_pending sha = nil
+  def next_pending sha = nil, current_user = nil
     query = commits.pending.order("commited_at ASC")
+    query = query.where("committer_id != ?", current_user.id) if current_user
     next_commit = if sha && commit = Commit.find_by_sha(sha)
       query.where(["commited_at > ?", commit.commited_at]).first
     end
