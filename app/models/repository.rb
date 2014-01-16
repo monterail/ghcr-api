@@ -20,10 +20,10 @@ class Repository < ActiveRecord::Base
 
   def next_pending sha = nil
     query = commits.pending.order("commited_at ASC")
-    if sha && commit = Commit.find_by_sha(sha)
-      query = query.where(["commited_at > ?", commit.commited_at])
+    next_commit = if sha && commit = Commit.find_by_sha(sha)
+      query.where(["commited_at > ?", commit.commited_at]).first
     end
-    query.first
+    next_commit || query.first
   end
 
   def to_s
