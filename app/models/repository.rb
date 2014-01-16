@@ -1,6 +1,6 @@
 class Repository < ActiveRecord::Base
-  has_many :commits
-  has_many :reminders
+  has_many :commits, dependent: :destroy
+  has_many :reminders, dependent: :delete_all
 
   uniquify :access_token, :length => 10
 

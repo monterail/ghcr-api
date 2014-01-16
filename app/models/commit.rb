@@ -3,7 +3,7 @@ class Commit < ActiveRecord::Base
   belongs_to :author, class_name: "User"
   belongs_to :committer, class_name: "User"
   belongs_to :last_reviewer, class_name: "User"
-  has_many :events
+  has_many :events, dependent: :delete_all
 
   scope :pending, -> { where(status: "pending") }
   scope :rejected, -> { where(status: "rejected") }
