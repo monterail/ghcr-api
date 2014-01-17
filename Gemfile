@@ -13,7 +13,8 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'rack-oauth2', require: 'rack/oauth2'
 
-gem 'webhook-payload', git: 'git://github.com/szajbus/webhook-payload.git'
+# waiting for bump version to 2.0.1
+gem 'webhook-payload', github: 'monterail/webhook-payload'
 gem 'hipchat-api'
 gem 'octokit'
 gem 'pry-rails'

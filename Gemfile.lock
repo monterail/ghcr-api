@@ -1,10 +1,10 @@
 GIT
-  remote: git://github.com/szajbus/webhook-payload.git
-  revision: f63d652e9be5f8eed456944857f11b4a22e64c46
+  remote: git://github.com/monterail/webhook-payload.git
+  revision: 75970624ed07568b9c8e59a8672e85082e1c21d2
   specs:
-    webhook-payload (1.1.0)
+    webhook-payload (2.0.0)
       multi_json
-      virtus (>= 0.5.0)
+      virtus (~> 0.5.0)
 
 GEM
   remote: http://rubygems.org/
@@ -38,12 +38,12 @@ GEM
     atomic (1.1.14)
     attr_required (0.0.5)
     awesome_print (1.1.0)
-    backports (3.3.3)
+    backports (3.4.0)
     builder (3.1.4)
     coderay (1.1.0)
     colored (1.2)
     database_cleaner (1.0.1)
-    descendants_tracker (0.0.1)
+    descendants_tracker (0.0.3)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     factory_girl (4.2.0)
