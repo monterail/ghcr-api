@@ -35,5 +35,7 @@ module GhcrApi
     end
 
     config.secret_key_base = 'ghcr-api'
+
+    config.cache_store = :redis_store, "#{Figaro.env.redis_url}/ghcr-api:#{Rails.env}:cache"
   end
 end

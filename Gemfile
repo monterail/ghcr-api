@@ -19,6 +19,7 @@ gem 'hipchat-api'
 gem 'octokit'
 gem 'pry-rails'
 gem 'sentry-raven'
+gem 'redis-rails', '~> 4.0.0'
 
 group :development do
   # Debugging
