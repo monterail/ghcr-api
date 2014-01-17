@@ -4,8 +4,7 @@ class StatsController < ApplicationController
     repos = if shas.present?
       Repository.where(:access_token => shas).pluck(:id, :name)
     else
-      repository_ids = Commit.pending.group(:repository_id).having('COUNT(*) > 0').count.keys
-      Repository.where(:id => repository_ids).pluck(:id, :name)
+      Repository.pluck(:id, :name)
     end
     chain_start = Commit.where(:repository_id => repos.map(&:first))
     render json: {
