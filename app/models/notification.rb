@@ -1,35 +1,10 @@
 class Notification
-  # github username => hipchat mention
-  HARDCODED_MAPPING = {
-    "chytreg"         =>  "dariusz",
-    "teamon"          =>  "tymon",
-    "porada"          =>  "dominik",
-    "bartoszpietrzak" =>  "bartosz",
-    "szymo"           =>  "szymon",
-    "tallica"         =>  "tallica",
-    "szajbus"         =>  "szajbus",
-    "jcieslar"        =>  "jakub",
-    "sheerun"         =>  "adam",
-    "venticco"        =>  "KrzysztofJung",
-    "jandudulski"     =>  "jan",
-    "michlask"        =>  "michal",
-    "ostrzy"          =>  "ostrzy",
-    "szkarol"         =>  "karol",
-    "dmilith"         =>  "dmilith",
-    "ktatomir"        =>  "kasia",
-    "tupaja"          =>  "lukasz",
-    "thion"           =>  "kamil",
-    "proapi"          =>  "proapi",
-    "trzewiczek"      =>  "trzewiczek"
-  }
-
-
   class << self
     def deliver_rejected(event)
+      return false if Figaro.env.hipchat_token.blank?
       commit = event.commit
-      username = commit.author.try(:username)
-      hipchat_username = HARDCODED_MAPPING[username.downcase]
-      hipchat_reviewer = HARDCODED_MAPPING[event.reviewer.username]
+      hipchat_username = commit.author.try(:hipcaht_username)
+      hipchat_reviewer = event.reviewer.hipchat_username
 
       unless hipchat_username.blank?
         message  = "@#{hipchat_username} your commit has been rejected by #{hipchat_reviewer}: "
@@ -41,6 +16,5 @@ class Notification
     def hipchat_api
       @hipchat_api ||= HipChat::API.new(Figaro.env.hipchat_token)
     end
-
   end
 end
