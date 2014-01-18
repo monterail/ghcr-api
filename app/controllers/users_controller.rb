@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate!, :only => [:show]
+  before_filter :authenticate!
 
   def show
     user_repositories = Rails.cache.fetch("user_repositories_#{current_user.id}", expires_in: 1.hour) do
@@ -34,8 +34,19 @@ class UsersController < ApplicationController
 
     render json: {
       username: current_user.username,
+      hipchat_username: current_user.hipchat_username,
       repositories: normalized_repositories
     }
   end
 
+  def update
+    current_user.update_attributes(user_settings)
+    head :ok
+  end
+
+  protected
+
+  def user_settings
+    params.require(:user).permit(:hipchat_username)
+  end
 end

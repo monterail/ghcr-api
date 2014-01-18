@@ -5,6 +5,7 @@ GhcrApi::Application.routes.draw do
     post '/github/:repository_token', to: "github#payload"
 
     get '/init', to: 'users#show'
+    put '/settings', to: "users#update"
     scope ":owner/:repo", constraints: { repo: /[^\/]+/ } do
       resources :commits do
         collection do
