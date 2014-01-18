@@ -35,5 +35,6 @@ group :development do
   gem 'database_cleaner'
 end
 
-# Heroku
-gem "rails_12factor"
+group :production do
+  gem "rails_12factor"
+end

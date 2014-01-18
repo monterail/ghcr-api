@@ -40,13 +40,13 @@ class UsersController < ApplicationController
   end
 
   def update
-    current_user.update_attributes(user_settings)
+    current_user.update_attributes!(user_settings)
     head :ok
   end
 
   protected
 
   def user_settings
-    params.require(:user).permit(:hipchat_username)
+    params[:users].slice(:hipchat_username)
   end
 end
