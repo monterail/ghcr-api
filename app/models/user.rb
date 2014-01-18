@@ -41,6 +41,6 @@ class User < ActiveRecord::Base
 
   # now this is the simplest and the fastest way to do it
   def monterail_member?
-    Notification::HARDCODED_MAPPING.keys.include?(username.to_s.downcase)
+    hipchat_username?
   end
 end
