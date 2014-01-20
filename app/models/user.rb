@@ -11,14 +11,12 @@ class User < ActiveRecord::Base
   def self.find_or_create_from_github(data)
     user = if data[:username].present?
       find_or_create_by(username: data[:username])
-    end
-
-    user = unless user
+    else
       find_or_create_by(email: data[:email])
     end
 
     user.name  ||= data[:name]
-    user.email ||= data[:name]
+    user.email ||= data[:email]
 
     user.save! if user.changed?
     user

@@ -9,7 +9,10 @@ module MessageAnalyzer
   SHA_PATTERN = /[a-f\d]{6,40}/i
 
   def skip_review?
-    SKIP_REVIEW_PATTERNS.any? { |pattern| message =~ pattern } or (committer and !committer.team_member?)
+    return true if committer.try(:username).blank?
+    return true if not committer.try(:team_member?)
+    return true if SKIP_REVIEW_PATTERNS.any? { |pattern| message =~ pattern }
+    false
   end
 
   def accepted_shas
