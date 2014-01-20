@@ -3,7 +3,7 @@ class Notification
     def deliver_rejected(event)
       return false if Figaro.env.hipchat_token.blank?
       commit = event.commit
-      hipchat_username = commit.author.try(:hipcaht_username)
+      hipchat_username = commit.author.try(:hipchat_username)
       hipchat_reviewer = event.reviewer.hipchat_username
 
       unless hipchat_username.blank?
