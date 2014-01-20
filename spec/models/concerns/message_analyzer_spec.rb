@@ -41,16 +41,16 @@ describe MessageAnalyzer do
   end
 
   it "should skip when committer is not from monterail" do
-    pending 'TODO'
     commit = build_commit('Something')
     commit.committer = User.new(username: 'not-from-monterail')
+    commit.committer.stub team_member?: false
     expect(commit.skip_review?).to be_true
   end
 
   it "should not skip when committer is from monterail" do
-    pending 'TODO'
     commit = build_commit('Something')
     commit.committer = User.new(username: 'chytreg')
+    commit.committer.stub team_member?: true
     expect(commit.skip_review?).to be_false
   end
 end

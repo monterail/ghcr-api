@@ -1,6 +1,7 @@
 URL: http://ghcr-api.dev                # required
 GITHUB_CLIENT_ID: ""                    # required
 GITHUB_CLIENT_SECRET: ""                # required
+GITHUB_ORG: ""                          # optional
 REDIS_URL: "redis://127.0.0.1:6379/0"   # required
 RAVEN_DSN: ""                           # optional
 HIPCHAT_TOKEN: ""                       # optional
