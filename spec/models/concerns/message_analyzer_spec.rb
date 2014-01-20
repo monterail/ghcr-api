@@ -3,6 +3,7 @@ require 'spec_helper'
 describe MessageAnalyzer do
   def build_commit(message)
     commit = Commit.new(message: message)
+    commit.committer = User.new(username: 'chytreg')
     commit.extend(MessageAnalyzer)
   end
 
@@ -19,6 +20,12 @@ describe MessageAnalyzer do
   it "should not skip commits with no skip message" do
     commit = build_commit("Added some files")
     expect(commit.skip_review?).to be_false
+  end
+
+  it "should skip commits with blank commiter" do
+    commit = build_commit("Added some files")
+    commit.committer = nil
+    expect(commit.skip_review?).to be_true
   end
 
   it "should detect auto-accepted shas" do
@@ -49,7 +56,6 @@ describe MessageAnalyzer do
 
   it "should not skip when committer is from monterail" do
     commit = build_commit('Something')
-    commit.committer = User.new(username: 'chytreg')
     commit.committer.stub team_member?: true
     expect(commit.skip_review?).to be_false
   end
