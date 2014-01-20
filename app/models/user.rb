@@ -39,8 +39,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  # now this is the simplest and the fastest way to do it
+  # TODO
   def monterail_member?
-    hipchat_username?
+    true
   end
 end
