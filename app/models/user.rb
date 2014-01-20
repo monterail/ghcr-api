@@ -9,19 +9,18 @@ class User < ActiveRecord::Base
   #        :name - github user name (required)
   #        :username - github user login (optional)
   def self.find_or_create_from_github(data)
-    user = User.where(email: data[:email]).first ||
-           User.new(email: data[:email])
-
-    if user.name != data[:name]
-      user.name = data[:name]
+    user = if data[:username].present?
+      find_or_create_by(username: data[:username])
     end
 
-    if data[:username] && user.username != data[:username]
-      user.username = data[:username]
+    user = unless user
+      find_or_create_by(email: data[:email])
     end
+
+    user.name  ||= data[:name]
+    user.email ||= data[:name]
 
     user.save! if user.changed?
-
     user
   end
 
