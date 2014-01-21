@@ -222,7 +222,7 @@ DEPENDENCIES
   figaro
   hipchat-api
   json_spec
-  octokit
+  octokit (~> 1.25)
   omniauth
   omniauth-github
   pg (>= 0.17.0)
