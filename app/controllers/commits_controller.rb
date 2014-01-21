@@ -10,7 +10,7 @@ class CommitsController < ApplicationController
   end
 
   def show
-    commit = repo.commits.where(sha: params[:id]).first || not_found
+    commit = repo.commits.find_by(sha: params[:id]) || not_found
     render json: commit.response_hash
   end
 
@@ -25,7 +25,7 @@ class CommitsController < ApplicationController
 
   def update
     sha = params[:id]
-    commit = repo.commits.where(sha: sha).first
+    commit = repo.commits.find_by(sha: sha)
     commit ||= repo.commits.create!(
       sha:        params[:id],
       message:    params[:message],
