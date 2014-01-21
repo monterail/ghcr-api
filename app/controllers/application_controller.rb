@@ -9,8 +9,8 @@ class ApplicationController < ActionController::API
   end
 
   def current_user
-    if Rails.env.development? && params['username'].present?
-      User.where(username: params[:username]).first 
+    if Rails.env.development? && params[:username].present?
+      User.find_by!(username: params[:username])
     else
       current_token && current_token.user
     end
