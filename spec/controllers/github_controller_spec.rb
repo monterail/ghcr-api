@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe GithubController do
   describe 'POST payload' do
-    it 'should add new commits' do
-      pending "This test needs to be updated!"
+    let(:repository) { Repository.create(name: 'test', owner: 'chytreg') }
 
+    it 'should add new commits' do
       payload = fixture('test_payload.json')
 
       expect {
-        post :payload, payload: payload, format: :json
+        post :payload, { payload: payload, repository_token: repository.access_token, format: :json }
       }.to change { Commit.count }.by(3)
 
       Commit.all.all? { |c| c.status.should == 'pending' }
