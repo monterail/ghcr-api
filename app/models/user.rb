@@ -27,20 +27,16 @@ class User < ActiveRecord::Base
   end
 
   def github
-    Octokit::Client.new(:login => username, :oauth_token => github_access_token, :auto_traversal => true)
+    Octokit::Client.new(login: username, access_token: github_access_token, auto_paginate: true)
   end
 
   def permissions(repo_name)
-    Rails.cache.fetch("user_permissions_#{id}_#{repo_name}", expires_in: 1.day) do
-      github.repository(repo_name).permissions
-    end
+    github.repository(repo_name).permissions
   end
 
   def team_member?
     return true if Figaro.env.github_org.blank?
-    team_members = Rails.cache.fetch("team_members", expires_in: 1.day) do
-      github.org_members(Figaro.env.github_org).map{ |m| m['login'] }
-    end
+    team_members = github.org_public_members(Figaro.env.github_org).map(&:login)
     team_members.include?(username)
   end
 end

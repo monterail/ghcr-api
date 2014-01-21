@@ -5,7 +5,7 @@ gem 'rails', '4.0.2'
 gem 'pg', ">= 0.17.0"
 gem 'rails-api'
 gem 'figaro'
-gem 'yajl-ruby'
+gem 'yajl-ruby', require: 'yajl'
 
 gem 'uniquify'
 
@@ -16,7 +16,9 @@ gem 'rack-oauth2', require: 'rack/oauth2'
 # waiting for bump version to 2.0.1
 gem 'webhook-payload', github: 'monterail/webhook-payload'
 gem 'hipchat-api'
-gem 'octokit'
+# act as shared cache waiting for 3.0.1
+gem 'faraday-http-cache', github: 'plataformatec/faraday-http-cache'
+gem 'octokit', '~> 2.7'
 gem 'pry-rails'
 gem 'sentry-raven'
 gem 'redis-rails', '~> 4.0.0'
