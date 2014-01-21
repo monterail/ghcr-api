@@ -5,7 +5,7 @@ class AuthorizationsController < ApplicationController
       render(status: :unprocessable_entity, json: { error: 'No auth info provided' }) and return
     end
     if redirect_uri = request.env['omniauth.params']['redirect_uri'] || request.env['omniauth.origin']
-      user = User.find_or_create_by(username: auth_hash['info']['nickname']) do |u|
+      user = User.find_or_create_by(username: auth_hash['info']['nickname']).tap do |u|
         u.name  = auth_hash['info']['name']
         u.email = auth_hash['info']['email']
         u.github_access_token = auth_hash['credentials']['token']
