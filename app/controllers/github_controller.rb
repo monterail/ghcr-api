@@ -59,7 +59,7 @@ class GithubController < ApplicationController
       if commit_data.distinct
         author = User.find_or_create_from_github(commit_data.author)
 
-        commit = repo.commits.where(sha: commit_data.id).first || repo.commits.create!({
+        commit = repo.commits.find_by(sha: commit_data.id) || repo.commits.create!({
           sha:        commit_data.id,
           ref:        payload.try(:ref),
           message:    commit_data.message,
