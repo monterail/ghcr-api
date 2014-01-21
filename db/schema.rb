@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140118170825) do
+ActiveRecord::Schema.define(version: 20140121232450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(version: 20140118170825) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "access_tokens", ["token"], name: "index_access_tokens_on_token", using: :btree
+  add_index "access_tokens", ["user_id"], name: "index_access_tokens_on_user_id", using: :btree
 
   create_table "commits", force: true do |t|
     t.string   "sha"
@@ -38,6 +41,12 @@ ActiveRecord::Schema.define(version: 20140118170825) do
     t.string   "ref"
   end
 
+  add_index "commits", ["committer_id"], name: "index_commits_on_committer_id", using: :btree
+  add_index "commits", ["last_reviewer_id"], name: "index_commits_on_last_reviewer_id", using: :btree
+  add_index "commits", ["repository_id"], name: "index_commits_on_repository_id", using: :btree
+  add_index "commits", ["sha"], name: "index_commits_on_sha", using: :btree
+  add_index "commits", ["status", "author_id"], name: "index_commits_on_status_and_author_id", using: :btree
+
   create_table "events", force: true do |t|
     t.integer  "commit_id"
     t.integer  "reviewer_id"
@@ -45,6 +54,9 @@ ActiveRecord::Schema.define(version: 20140118170825) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "events", ["commit_id"], name: "index_events_on_commit_id", using: :btree
+  add_index "events", ["reviewer_id"], name: "index_events_on_reviewer_id", using: :btree
 
   create_table "reminders", force: true do |t|
     t.integer  "hour",          default: 11
@@ -55,6 +67,9 @@ ActiveRecord::Schema.define(version: 20140118170825) do
     t.datetime "updated_at"
   end
 
+  add_index "reminders", ["repository_id"], name: "index_reminders_on_repository_id", using: :btree
+  add_index "reminders", ["user_id"], name: "index_reminders_on_user_id", using: :btree
+
   create_table "repositories", force: true do |t|
     t.string   "name"
     t.string   "owner"
@@ -62,7 +77,11 @@ ActiveRecord::Schema.define(version: 20140118170825) do
     t.datetime "updated_at"
     t.string   "access_token"
     t.boolean  "connected",    default: false
+    t.string   "full_name"
   end
+
+  add_index "repositories", ["access_token"], name: "index_repositories_on_access_token", using: :btree
+  add_index "repositories", ["full_name"], name: "index_repositories_on_full_name", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -73,5 +92,7 @@ ActiveRecord::Schema.define(version: 20140118170825) do
     t.string   "github_access_token"
     t.string   "hipchat_username"
   end
+
+  add_index "users", ["username"], name: "index_users_on_username", using: :btree
 
 end
