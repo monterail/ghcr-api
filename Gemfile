@@ -16,7 +16,7 @@ gem 'rack-oauth2', require: 'rack/oauth2'
 # waiting for bump version to 2.0.1
 gem 'webhook-payload', github: 'monterail/webhook-payload'
 gem 'hipchat-api'
-gem 'octokit'
+gem 'octokit', '~> 1.25'
 gem 'pry-rails'
 gem 'sentry-raven'
 gem 'redis-rails', '~> 4.0.0'
