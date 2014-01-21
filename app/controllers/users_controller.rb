@@ -2,12 +2,11 @@ class UsersController < ApplicationController
   before_filter :authenticate!
 
   def show
-    user_repositories = Rails.cache.fetch("user_repositories_#{current_user.id}", expires_in: 1.hour) do
+    user_repositories =
       current_user.github.repositories +
-      current_user.github.organizations.map do |org|
+      current_user.github.organizations.map { |org|
         current_user.github.org_repos(org.login)
-      end.flatten(1)
-    end
+      }.flatten(1)
 
     normalized_repositories = user_repositories.map do |repo|
       ghcr_repo = Repository.where(owner: repo.owner.login, name: repo.name).first
