@@ -4,6 +4,8 @@ class Repository < ActiveRecord::Base
 
   uniquify :access_token, :length => 10
 
+  before_save :assign_full_name
+
   class << self
     def with_access_by(username, access_type = :admin)
       user = User.find_by!(username: username)
@@ -29,5 +31,9 @@ class Repository < ActiveRecord::Base
 
   def to_s
     "#{owner}/#{name}"
+  end
+
+  def assign_full_name
+    self.full_name = to_s
   end
 end

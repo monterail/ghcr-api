@@ -51,9 +51,10 @@ class CommitsController < ApplicationController
   protected
 
   def repo
-    @repo ||= Repository.where(
-      owner:  params[:owner],
-      name:   params[:repo]
-    ).first || not_found
+    @repo ||= Repository.find_by(full_name: repo_name) || not_found
+  end
+
+  def repo_name
+    "#{params[:owner]}/#{params[:repo]}"
   end
 end
