@@ -84,17 +84,14 @@ class GithubController < ApplicationController
     head :ok
   end
 
-  private
+  protected
 
-    def repo
-      @repo ||= Repository.where(
-        owner:  params[:owner],
-        name:   params[:repo]
-      ).first
-    end
+  def repo
+    @repo ||= Repository.find_by(full_name: repo_name)
+  end
 
-    def repo_name
-      "#{params[:owner]}/#{params[:repo]}"
-    end
+  def repo_name
+    "#{params[:owner]}/#{params[:repo]}"
+  end
 
 end
