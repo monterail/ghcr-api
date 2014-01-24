@@ -36,16 +36,12 @@ class User < ActiveRecord::Base
   end
 
   def permissions(repo_name)
-    Rails.cache.fetch("user_permissions_#{id}_#{repo_name}", expires_in: 1.day) do
-      github.repository(repo_name).permissions
-    end
+    github.repository(repo_name).permissions
   end
 
   def team_member?
     return true if Figaro.env.github_org.blank?
-    team_members = Rails.cache.fetch("team_members", expires_in: 1.day) do
-      Octokit.org_members(Figaro.env.github_org).map{ |m| m['login'] }
-    end
+    team_members = Octokit.org_members(Figaro.env.github_org).map{ |m| m['login'] }
     team_members.include?(username)
   end
 end

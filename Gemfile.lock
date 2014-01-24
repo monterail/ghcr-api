@@ -6,6 +6,14 @@ GIT
       multi_json
       virtus (~> 0.5.0)
 
+GIT
+  remote: git://github.com/plataformatec/faraday-http-cache.git
+  revision: 0f1826fcbd0ef3c23162285d7183c662f549ae2f
+  specs:
+    faraday-http-cache (0.3.0)
+      activesupport (>= 3.0)
+      faraday (~> 0.8)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -219,6 +227,7 @@ DEPENDENCIES
   awesome_print
   database_cleaner
   factory_girl_rails
+  faraday-http-cache!
   figaro
   hipchat-api
   json_spec
