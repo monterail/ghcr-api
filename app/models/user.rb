@@ -22,6 +22,11 @@ class User < ActiveRecord::Base
     user
   end
 
+  def hipchat_username
+    return @hipchat_username if defined? @hipchat_username
+    @hipchat_username = (hipchat_username? ? read_attribute(:hipchat_username) : username)
+  end
+
   def access_token
     access_tokens.first || access_tokens.create
   end
