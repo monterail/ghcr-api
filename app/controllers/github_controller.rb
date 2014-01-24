@@ -1,5 +1,5 @@
 class GithubController < ApplicationController
-  before_filter :authenticate!, :only => [:show]
+  before_filter :authenticate!, only: [:show]
 
   def show
     if repo.present?
@@ -10,7 +10,7 @@ class GithubController < ApplicationController
         username: current_user.username,
         rejected: rejected.map(&:response_hash),
         pending: pending.map(&:response_hash),
-        permissions: current_user.permissions(repo_name),
+        permissions: current_user.permissions(repo_full_name),
         token: repo.access_token,
         connected: true
       }
@@ -19,7 +19,7 @@ class GithubController < ApplicationController
         username: current_user.username,
         rejected: [],
         pending: [],
-        permissions: current_user.permissions(repo_name),
+        permissions: current_user.permissions(repo_full_name),
         token: "",
         connected: false
       }
@@ -27,7 +27,7 @@ class GithubController < ApplicationController
   end
 
   def connect
-    unless current_user.permissions(repo_name)
+    unless current_user.permissions(repo_full_name)
       render status: :unauthorized, json: { reason: "You do not have access to add Github hook for this repo" }
       return
     end
@@ -73,11 +73,14 @@ class GithubController < ApplicationController
         status = commit.skip_review? ? "skipped" : "pending"
         commit.events.create!(status: status)
 
-        commit.accepted_shas.each do |sha|
+        fixed_commits = commit.accepted_shas.map { |sha|
           if c = repo.commits.find_by_sha(sha)
-            c.events.create(:status => "auto-accepted", :reviewer => author)
+            c.events.create(status: "auto-accepted", reviewer: author)
+            c
           end
-        end
+        }.compact
+
+        Notification.deliver_auto_accepted(commit, fixed_commits) if fixed_commits.present?
       end
     end
 
@@ -87,10 +90,10 @@ class GithubController < ApplicationController
   protected
 
   def repo
-    @repo ||= Repository.find_by(full_name: repo_name)
+    @repo ||= Repository.find_by(full_name: repo_full_name)
   end
 
-  def repo_name
+  def repo_full_name
     "#{params[:owner]}/#{params[:repo]}"
   end
 
