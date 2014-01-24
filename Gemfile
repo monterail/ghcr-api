@@ -5,7 +5,7 @@ gem 'rails', '4.0.2'
 gem 'pg', ">= 0.17.0"
 gem 'rails-api'
 gem 'figaro'
-gem 'yajl-ruby', require: 'yajl'
+gem 'yajl-ruby', require: 'yajl/json_gem'
 
 gem 'uniquify'
 
