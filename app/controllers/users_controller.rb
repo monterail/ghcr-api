@@ -9,11 +9,11 @@ class UsersController < ApplicationController
       end.flatten(1)
     end
 
-    keys = user_repositories.map { |repo| "#{repo.owner.login}/#{repo.name}" }
-    ghcr_repos = Repository.where(full_name: keys).to_a.inject({}){ |h, r| h[r.to_s] = r; h }
+    full_name_ary = user_repositories.map(&:full_name)
+    ghcr_repos = Repository.where(full_name: full_name_ary).to_a.inject({}){ |h, r| h[r.to_s] = r; h }
 
     normalized_repositories = user_repositories.map do |repo|
-      ghcr_repo = ghcr_repos["#{repo.owner.login}/#{repo.name}"]
+      ghcr_repo = ghcr_repos[repo.full_name]
 
       pending = ghcr_repo ?
         ghcr_repo.commits.query(author: "!#{current_user.username}", status: "pending").count : 0
