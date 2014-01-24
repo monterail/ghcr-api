@@ -2,28 +2,18 @@ class GithubController < ApplicationController
   before_filter :authenticate!, :only => [:show]
 
   def show
-    if repo.present?
-      pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
-      rejected = repo.commits.query(author: current_user.username, status: "rejected")
+    repo = Repository.find_by!(full_name: repo_full_name)
+    pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
+    rejected = repo.commits.query(author: current_user.username, status: "rejected")
 
-      render json: {
-        username: current_user.username,
-        rejected: rejected.map(&:response_hash),
-        pending: pending.map(&:response_hash),
-        permissions: current_user.permissions(repo_name),
-        token: repo.access_token,
-        connected: true
-      }
-    else
-      render json: {
-        username: current_user.username,
-        rejected: [],
-        pending: [],
-        permissions: current_user.permissions(repo_name),
-        token: "",
-        connected: false
-      }
-    end
+    render json: {
+      username: current_user.username,
+      rejected: rejected.map(&:response_hash),
+      pending: pending.map(&:response_hash),
+      permissions: current_user.permissions(repo_full_name),
+      token: repo.access_token,
+      connected: true
+    }
   end
 
   def connect
@@ -86,11 +76,7 @@ class GithubController < ApplicationController
 
   protected
 
-  def repo
-    @repo ||= Repository.find_by(full_name: repo_name)
-  end
-
-  def repo_name
+  def repo_full_name
     "#{params[:owner]}/#{params[:repo]}"
   end
 
