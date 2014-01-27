@@ -17,7 +17,7 @@ class GithubController < ApplicationController
   end
 
   def connect
-    unless current_user.permissions(repo_name)
+    unless current_user.permissions(repo_full_name)
       render status: :unauthorized, json: { reason: "You do not have access to add Github hook for this repo" }
       return
     end

@@ -51,10 +51,10 @@ class CommitsController < ApplicationController
   protected
 
   def repo
-    @repo ||= Repository.find_by(full_name: repo_name) || not_found
+    @repo ||= Repository.find_by(full_name: repo_full_name) || not_found
   end
 
-  def repo_name
+  def repo_full_name
     "#{params[:owner]}/#{params[:repo]}"
   end
 end
