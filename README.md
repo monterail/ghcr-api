@@ -38,6 +38,10 @@ HIPCHAT_ROOM: ""                        # optional
 ```
 heroku create
 git push heroku master
+
+heroku addons:add pgbackups
+heroku addons:add redistogo
+
 rake figaro:heroku
 ```
 
