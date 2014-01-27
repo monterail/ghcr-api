@@ -23,12 +23,14 @@ Create [GitHub OAuth application](https://github.com/settings/applications/new)
 Edit `config/application.yml`
 
 ```
-URL: "YOUR_HOMEPAGE_URL"  # required
-GITHUB_CLIENT_ID: ""      # required
-GITHUB_CLIENT_SECRET: ""  # required
-RAVEN_DSN: ""             # optional
-HIPCHAT_TOKEN: ""         # optional
-HIPCHAT_ROOM: ""          # optional
+URL: YOUR_HOMEPAGE_URL                  # required
+GITHUB_CLIENT_ID: ""                    # required
+GITHUB_CLIENT_SECRET: ""                # required
+GITHUB_ORG: ""                          # optional
+REDIS_URL: "redis://127.0.0.1:6379/0"   # required
+RAVEN_DSN: ""                           # optional
+HIPCHAT_TOKEN: ""                       # optional
+HIPCHAT_ROOM: ""                        # optional
 ```
 
 ### Heroku
