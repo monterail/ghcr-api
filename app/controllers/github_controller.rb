@@ -63,11 +63,12 @@ class GithubController < ApplicationController
         status = commit.skip_review? ? "skipped" : "pending"
         commit.events.create!(status: status)
 
-        commit.accepted_shas.each do |sha|
+        commit.accepted_shas.map do |sha|
           if c = repo.commits.find_by_sha(sha)
-            c.events.create(:status => "auto-accepted", :reviewer => author)
+            c.events.create(status: "auto-accepted", reviewer: author)
           end
         end
+        Notification.deliver_auto_accepted(commit)
       end
     end
 
