@@ -15,9 +15,11 @@ class Notification
 
     def deliver_auto_accepted(commit)
       return false unless hipchat_api?
-      hipchat_reviewers = Event.joins(:commit, :reviewer)
-        .where("commits.sha" => commit.accepted_shas, "events.status" => "rejected")
-        .uniq.pluck('users.hipchat_username')
+      hipchat_reviewers = Event.joins(:commit, :reviewer).
+        where('events.status' => 'rejected').
+        where('commits.repository_id' => commit.repository_id).
+        where("commits.sha SIMILAR TO ?", "(#{commit.accepted_shas.join('|')})%").
+        uniq.pluck('users.hipchat_username')
 
       unless hipchat_reviewers.blank?
         message  = "@#{hipchat_reviewers.join(', @')} this commit made some fixes:"
