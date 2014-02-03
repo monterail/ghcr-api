@@ -16,7 +16,7 @@ class Event < ActiveRecord::Base
         username: reviewer.try(:username),
         name: reviewer.try(:name)
       },
-      created_at: I18n.l(created_at, format: "%H:%m, %d %b %Y")
+      created_at: I18n.l(created_at, format: "%H:%M, %d %b %Y")
     }
   end
 end
