@@ -2,6 +2,10 @@ class User < ActiveRecord::Base
   has_many :access_tokens, dependent: :delete_all
   has_many :reminders, dependent: :delete_all
 
+  has_many :authored_commits, class_name: 'Commit', foreign_key: 'author_id'
+  has_many :commited_commits, class_name: 'Commit', foreign_key: 'commiter_id'
+  has_many :reviewed_commits, class_name: 'Commit', foreign_key: 'last_reviewer_id'
+
   # Public: Find or create user from github payload
   #
   # data - user hash returned from github
