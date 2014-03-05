@@ -2,9 +2,9 @@ class StatsController < ApplicationController
   def show
     shas = params[:repos].to_s.split(',')
     repos = if shas.present?
-      Repository.where(:access_token => shas).pluck(:id, :name)
+      Repository.where(:access_token => shas).pluck(:id, :full_name)
     else
-      Repository.pluck(:id, :name)
+      Repository.pluck(:id, :full_name)
     end
     chain_start = Commit.where(:repository_id => repos.map(&:first))
     render json: {
