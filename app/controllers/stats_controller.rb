@@ -9,11 +9,11 @@ class StatsController < ApplicationController
     chain_start = Commit.where(:repository_id => repos.map(&:first))
     render json: {
       pending:  chain_start.pending.count,
-      rejected: chain_start.rejected.count,
+      discuss: chain_start.discuss.count,
       pending_per_project: per_repo_count(chain_start.pending, repos),
-      rejected_per_project: per_repo_count(chain_start.rejected, repos),
+      discuss_per_project: per_repo_count(chain_start.discuss, repos),
       pending_per_author: per_author_count(chain_start.pending),
-      rejected_per_author: per_author_count(chain_start.rejected)
+      discuss_per_author: per_author_count(chain_start.discuss)
     }
   end
 

@@ -42,7 +42,7 @@ class CommitsController < ApplicationController
       reviewer: current_user
     )
 
-    Notification.deliver_rejected(event) if event.status == "rejected"
+    Notification.deliver_discuss(event) if event.status == "discuss"
 
     render json: commit.reload.response_hash
   end

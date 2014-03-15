@@ -17,8 +17,8 @@ class UsersController < ApplicationController
       pending = ghcr_repo ?
         ghcr_repo.commits.query(author: "!#{current_user.username}", status: "pending").count : 0
 
-      rejected = ghcr_repo ?
-        ghcr_repo.commits.query(author: current_user.username, status: "rejected").count : 0
+      discuss = ghcr_repo ?
+        ghcr_repo.commits.query(author: current_user.username, status: "discuss").count : 0
 
       {
         name: repo.name,
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
         permissions: repo.permissions,
         connected: !!ghcr_repo.try(:connected),
         pending_count: pending,
-        rejected_count: rejected
+        discuss_count: discuss
       }
     end
 

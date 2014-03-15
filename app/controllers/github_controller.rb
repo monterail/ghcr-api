@@ -4,15 +4,15 @@ class GithubController < ApplicationController
   def show
     repo = Repository.find_by!(full_name: repo_full_name)
     pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
-    rejected = repo.commits.query(author: current_user.username, status: "rejected")
+    discuss = repo.commits.query(author: current_user.username, status: "discuss")
 
     render json: {
-      username: current_user.username,
-      rejected: rejected.map(&:response_hash),
-      pending: pending.map(&:response_hash),
+      username:    current_user.username,
+      discuss:     discuss.map(&:response_hash),
+      pending:     pending.map(&:response_hash),
       permissions: current_user.permissions(repo_full_name),
-      token: repo.access_token,
-      connected: true
+      token:       repo.access_token,
+      connected:   true
     }
   end
 

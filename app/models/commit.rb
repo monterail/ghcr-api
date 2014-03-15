@@ -6,7 +6,7 @@ class Commit < ActiveRecord::Base
   has_many :events, dependent: :delete_all
 
   scope :pending, -> { where(status: "pending") }
-  scope :rejected, -> { where(status: "rejected") }
+  scope :discuss, -> { where(status: "discuss") }
 
   def self.find_by_sha(sha)
     where("sha ILIKE ?", "#{sha}%").first
@@ -33,8 +33,8 @@ class Commit < ActiveRecord::Base
       values = params[key].to_s.split(",")
       if values.first =~ /^!(.+)$/
         values.first[0] = ''
-        rejected_ids = User.where(username: values).pluck(:id)
-        commits = commits.where.not("#{key}_id" => rejected_ids)
+        discuss_ids = User.where(username: values).pluck(:id)
+        commits = commits.where.not("#{key}_id" => discuss_ids)
       else
         accepted_ids = User.where(username: values).pluck(:id)
         commits = commits.where("#{key}_id" => accepted_ids)
