@@ -1,4 +1,4 @@
-## GitHub code review API for [browser extension](https://github.com/monterail/ghcr)
+## GitHub Code Review API for [browser extension](https://github.com/monterail/ghcr)
 
 ### Requirements
   - ruby 1.9.2 or higher
