@@ -20,15 +20,17 @@ class StatsController < ApplicationController
   private
     def per_repo_count(query, repos)
       counts = Hash[query.count(group: :repository_id)]
-      Hash[repos.map do |r_id, name|
-        [name, counts[r_id].to_i]
-      end]
+      result = repos.map do |r_id, name|
+        [name, counts[r_id].to_i] if counts[r_id]
+      end.compact.sort {|a, b| b[1] <=> a[1] }
+      Hash[result]
     end
 
     def per_author_count(query)
       counts = Hash[query.count(group: :author_id)]
-      Hash[counts.map do |author_id, count|
+      result = counts.map do |author_id, count|
         [User.find(author_id).name, count.to_i]
-      end]
+      end.compact.sort {|a, b| b[1] <=> a[1] }
+      Hash[result]
     end
 end
