@@ -41,12 +41,23 @@ class Commit < ActiveRecord::Base
       end
     end
 
+    if params[:repository].present?
+      values = params[:repository].to_s.split(",")
+      if values.first =~ /^!(.+)$/
+        values.first[0] = ''
+        commits = commits.joins(:repository).where.not('repositories.full_name' => values)
+      else
+        commits = commits.joins(:repository).where('repositories.full_name' => values)
+      end
+    end
+
     commits
   end
 
   def response_hash
     {
       id: sha,
+      respository: repository.full_name,
       message: message,
       timestamp: created_at,
       status: status,

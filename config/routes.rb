@@ -6,6 +6,11 @@ GhcrApi::Application.routes.draw do
 
     get '/init', to: 'users#show'
     put '/settings', to: "users#update"
+    resource :stats, only: :show do
+      collection do
+        get :commits
+      end
+    end
     scope ":owner/:repo", constraints: { repo: /[^\/]+/ } do
       resources :commits do
         collection do
@@ -21,7 +26,5 @@ GhcrApi::Application.routes.draw do
       get '/', to: "github#show"
       post '/connect', to: "github#connect"
     end
-
-    resource :stats, only: :show
   end
 end
