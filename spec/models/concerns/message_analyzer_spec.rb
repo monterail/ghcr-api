@@ -45,6 +45,12 @@ describe MessageAnalyzer do
     expect(commit.accepted_shas).to eq(%w(abcdef))
   end
 
+  it "should analyze accept with dot at the end of commit message" do
+    commit = build_commit("[no review] Added some files accepts: abcdef.")
+    expect(commit.skip_review?).to be_true
+    expect(commit.accepted_shas).to eq(%w(abcdef))
+  end
+
   it "should be case insensitive" do
     commit = build_commit("[SkIp ReViEw]")
     expect(commit.skip_review?).to be_true
