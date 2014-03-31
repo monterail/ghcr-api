@@ -4,7 +4,7 @@ module MessageAnalyzer
     /\Amerge/i
   ]
 
-  ACCEPT_PATTERN = /accepts?:?(.+)/i
+  ACCEPT_PATTERN = /accepts?:?([\w\s,;]+)/i
 
   SHA_PATTERN = /[a-f\d]{6,40}/i
 
