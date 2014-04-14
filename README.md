@@ -45,7 +45,7 @@ heroku addons:add redistogo
 rake figaro:heroku
 ```
 
-Setup YOUR_HOMEPAGE_URL in [browser extension](https://github.com/monterail/ghcr)
+Setup YOUR_HOMEPAGE_URL/api/v1 in [browser extension](https://github.com/monterail/ghcr)
 
 ### Authentication
 
