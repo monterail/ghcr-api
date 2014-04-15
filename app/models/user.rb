@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
   def team_member?
     return true if Figaro.env.github_org.blank?
     team_members = Octokit.org_members(Figaro.env.github_org).map{ |m| m['login'] }
+    team_members += Figaro.env.guest_members.split(',')
     team_members.include?(username)
   end
 end

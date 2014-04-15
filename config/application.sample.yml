@@ -6,3 +6,4 @@ REDIS_URL: "redis://127.0.0.1:6379/0"   # required
 RAVEN_DSN: ""                           # optional
 HIPCHAT_TOKEN: ""                       # optional
 HIPCHAT_ROOM: ""                        # optional
+GUEST_MEMBERS: ""                       # optional
