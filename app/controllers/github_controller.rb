@@ -3,8 +3,8 @@ class GithubController < ApplicationController
 
   def show
     repo = Repository.find_by!(full_name: repo_full_name)
-    pending = repo.commits.query(author: "!#{current_user.username}", status: "pending")
-    discuss = repo.commits.query(author: current_user.username, status: "discuss")
+    pending = repo.commits.query(committer: "!#{current_user.username}", status: "pending")
+    discuss = repo.commits.query(committer: current_user.username, status: "discuss")
 
     render json: {
       username:    current_user.username,

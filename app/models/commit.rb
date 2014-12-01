@@ -62,10 +62,8 @@ class Commit < ActiveRecord::Base
       timestamp: created_at,
       status: status,
       last_event: events.last.try(:response_hash),
-      author: {
-        username: author.try(:username),
-        name:     author.try(:name)
-      }
+      committer: committer.try(:slice, :username, :name) || {},
+      author: author.try(:slice, :username, :name) || {},
     }
   end
 end
