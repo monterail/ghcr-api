@@ -32,7 +32,7 @@ class CommitsController < ApplicationController
       committer:  User.find_or_create_from_github(params[:committer])
     )
 
-    if commit.author == current_user
+    if commit.committer == current_user
       head :unauthorized
       return
     end
